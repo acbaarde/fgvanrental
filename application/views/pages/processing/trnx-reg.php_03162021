@@ -1,0 +1,150 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+$cfrom = substr($pperiod['cfrom'],8,2);
+$cto = substr($pperiod['cto'],8,2);
+$driver_id = $info['driver_id'];
+$company_id = $info['company_id'];
+$pperiod = $pperiod['cfrom'];
+$routes = explode("xOx",$info['routes']);
+
+// $cfrom = substr('2021-01-01',8,2);
+// $cto = substr('2021-01-15',8,2);
+// $driver_id = '200001';
+// $company_id = 'A';
+// $pperiod = '2021-01-01';
+// $routes = explode("xOx",'A1xOxB1xOx');
+$pansamantala = "pansamantala";
+
+$th = '';
+$t = 0;
+$strtot = '(';
+for($i = $cfrom; $i <= $cto; $i++){
+    $th .= "<th>" . strval(intval($i)) . "</th>";
+   
+    $t++;
+    $strtot .= 'day_' . strval(intval($t)) . "+";
+}
+$strtot = substr($strtot,0,strlen($strtot)-1) . ")";
+$thcolspan = $t + 3;
+
+$chtml = '
+	<table class="table table-responsive table-bordered table-sm">
+	    <thead class="thead-light">
+	        <tr>
+	            <th rowspan="2" style="vertical-align:middle;text-align:center; width: 200px;">ROUTE</th>
+	            <th id="thcolspan" colspan='.$thcolspan.' style="text-align:center">DAY / TRIP</th>
+	        </tr>
+	        <tr style="text-align:center">
+	            <th>RATES</th>
+	            '. $th .'
+	            <th>TOTAL TRIPS</th>
+	            <th>TOTAL</th>
+
+	        </tr>
+	    </thead>
+        <tbody>';
+
+$temp_tbl = 'regsched_'. str_replace('-','',$pperiod) . $this->mylib->random_string(10); 
+$str = "create table if not exists {$pansamantala}.{$temp_tbl} (
+    `driver_id` VARCHAR(10) DEFAULT '',
+    `company_id` VARCHAR(1) DEFAULT '',
+    `route_code` VARCHAR(150) DEFAULT '',
+    `rate` VARCHAR(6) DEFAULT '0.00',
+    `pperiod` VARCHAR(15) DEFAULT '',
+    `day_1` VARCHAR(6) DEFAULT '0',
+    `day_2` VARCHAR(6) DEFAULT '0',
+    `day_3` VARCHAR(6) DEFAULT '0',
+    `day_4` VARCHAR(6) DEFAULT '0',
+    `day_5` VARCHAR(6) DEFAULT '0',
+    `day_6` VARCHAR(6) DEFAULT '0',
+    `day_7` VARCHAR(6) DEFAULT '0',
+    `day_8` VARCHAR(6) DEFAULT '0',
+    `day_9` VARCHAR(6) DEFAULT '0',
+    `day_10` VARCHAR(6) DEFAULT '0',
+    `day_11` VARCHAR(6) DEFAULT '0',
+    `day_12` VARCHAR(6) DEFAULT '0',
+    `day_13` VARCHAR(6) DEFAULT '0',
+    `day_14` VARCHAR(6) DEFAULT '0',
+    `day_15` VARCHAR(6) DEFAULT '0',
+    `day_16` VARCHAR(6) DEFAULT '0',
+    `total_trip` VARCHAR(6) DEFAULT '0'
+  ) ENGINE=INNODB DEFAULT CHARSET=utf8";
+  $this->db->query($str);
+
+$route_codes = "(";
+for($i = 0; $i < count($routes); $i++){
+    if(!empty($routes[$i])){
+        $route_codes .= "'".$routes[$i]."',";
+    }
+}  
+$route_codes = substr($route_codes,0,strlen($route_codes)-1) . ")";
+
+$str = "insert into {$pansamantala}.{$temp_tbl} (driver_id,company_id,route_code,rate,pperiod,day_1,day_2,day_3,day_4,day_5,day_6,day_7,day_8,day_9,day_10,day_11,day_12,day_13,day_14,day_15,day_16,total_trip)
+(select driver_id,company_id,route_code,rate,pperiod,day_1,day_2,day_3,day_4,day_5,day_6,day_7,day_8,day_9,day_10,day_11,day_12,day_13,day_14,day_15,day_16,total_trip from aries.regular_sched2021 where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}' and route_code in {$route_codes})";
+$this->db->query($str);
+
+$str = "select * from {$pansamantala}.{$temp_tbl} where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}'";
+$query = $this->db->query($str);
+
+$str = "insert into {$pansamantala}.{$temp_tbl} (driver_id,company_id,route_code,rate,pperiod) VALUES ";
+$row = "";
+if($query->num_rows() == 0){
+    for($i = 0; $i < count($routes); $i++){
+        if(!empty($routes[$i])){
+            $rate = "select `rate` from aries.routes where route_code = '{$routes[$i]}' and route_trip = 'R'";
+            $rate = $this->db->query($rate)->row_array();
+            $row .= "('{$driver_id}','{$company_id}','{$routes[$i]}','{$rate['rate']}','{$pperiod}'),";
+        }
+    }    
+}else{
+    for($i = 0; $i < count($routes); $i++){
+        if(!empty($routes[$i])){
+            $chkd = "select * from {$pansamantala}.{$temp_tbl} where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}' and route_code = '{$routes[$i]}'";
+            $query = $this->db->query($chkd);
+            if($query->num_rows() == 0){
+                $rate = "select `rate` from aries.routes where route_code = '{$routes[$i]}' and route_trip = 'R'";
+                $rate = $this->db->query($rate)->row_array();
+                $row .= "('{$driver_id}','{$company_id}','{$routes[$i]}','{$rate['rate']}','{$pperiod}'),";
+            }
+        }
+    }   
+}
+$row = substr($row,0,strlen($row)-1);
+$row == '' ? '' : $this->db->query($str . $row);
+
+//SUM TOTAL TRIPS
+$str = "update {$pansamantala}.{$temp_tbl} set total_trip = {$strtot} where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}'";
+$this->db->query($str);
+
+$sstr = "delete from aries.regular_sched2021 where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}'";
+$this->db->query($sstr);
+$sstr = "insert into aries.regular_sched2021 select '',driver_id,company_id,route_code,rate,pperiod,day_1,day_2,day_3,day_4,day_5,day_6,day_7,day_8,day_9,day_10,day_11,day_12,day_13,day_14,day_15,day_16,total_trip from {$pansamantala}.{$temp_tbl}";
+$this->db->query($sstr);
+$sstr = "drop table if exists {$pansamantala}.{$temp_tbl}";
+$this->db->query($sstr);
+
+$str = "select aa.*,bb.route_name from aries.regular_sched2021 aa
+LEFT JOIN aries.routes bb ON bb.route_code = aa.route_code AND bb.route_trip = 'R'
+where aa.driver_id = '{$driver_id}' and aa.company_id = '{$company_id}' and aa.pperiod = '{$pperiod}'";
+$result = $this->db->query($str);
+if($result->num_rows() > 0){
+    $rows = $result->result_array();
+    foreach($rows as $row){
+        $chtml .=  '<tr style="text-align:center" id="'.$row['id'].'">' .
+                '<td>' . $row['route_name'] . '</td>' .
+                '<td>' . $row['rate'] . '</td>';
+        for($i=1; $i<=$t;$i++){
+            $value = $row['day_' .$i. ''] > 0 ? $row['day_' .$i. ''] : '';
+            $chtml .= '<td><input type="text" class="day_'. $i .'" size="1" maxlength="3" placeholder="0" value='.$value.'></td>';
+        }
+        $chtml .= '<td>' . $row['total_trip'] . '</td>' .
+                '<td>' . number_format($row['rate'] * $row['total_trip'],2) . '</td>' .
+                '</tr>';
+    }
+}
+$result->free_result();
+
+$chtml .= '</tbody>
+    </table>';
+    
+	echo $chtml;
+?>

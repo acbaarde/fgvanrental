@@ -1,0 +1,145 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+// echo $pperiod;
+
+?>
+
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <h3 class="page-header"><?php echo strtoupper($info['FULLNAME']); ?></h3>
+                    </div>
+                    <div class="col-md-5"> 
+                        <ul class="list-unstyled">
+                            <li>
+                                <ul class="list-inline">
+                                    <li style="width:80px;"><strong>ID:</strong></li>
+                                    <li style="display: inline;"><?php echo $info['driver_id']; ?></li>     
+                                </ul>
+                                <ul class="list-inline">
+                                    <li style="width:80px;"><strong>UNIT:</strong></li>
+                                    <li style="display: inline;"><?php echo $info['unit']; ?></li>     
+                                </ul>
+                                <ul class="list-inline">
+                                    <li style="width:80px;"><strong>PLATE #.:</strong></li>
+                                    <li style="display: inline;"><?php echo $info['plate_number']; ?></li>     
+                                </ul>
+                            </li>       
+                        </ul>
+                    </div>
+                    <div class="col-md-7">
+                        <ul class="list-unstyled">
+                            <li>
+                                <ul class="list-inline">
+                                    <li style="width:110px;"><strong>COMPANY:</strong></li>
+                                    <li style="display: inline;"><?php echo $info['company_name']; ?></li>     
+                                </ul>
+                                <ul class="list-inline">
+                                    <li style="width:110px;"><strong>PERIOD:</strong></li>
+                                    <li style="display: inline;"><?php echo $pperiod['cfrom']; ?></li>     
+                                </ul>
+                                <ul class="list-inline">
+                                    <li style="width:110px;"><strong>REFERENCE #.:</strong></li>
+                                    <li style="display: inline;"><?php echo $info['refno']; ?></li>     
+                                </ul>
+                            </li>       
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="regular-tab" data-toggle="tab" href="#regular" role="tab" aria-controls="regular" aria-selected="true">Regular</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="extended-tab" data-toggle="tab" href="#extended" role="tab" aria-controls="extended" aria-selected="false">Extended</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="special-tab" data-toggle="tab" href="#special" role="tab" aria-controls="special" aria-selected="false">Special</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="regular" role="tabpanel" aria-labelledby="regular-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" style="width: 110px" class="btn btn-primary btn-sm">SAVE</button>
+                                        <button type="submit" style="width: 110px" class="btn btn-success btn-sm">CANCEL</button>
+                                        <button type="submit" style="width: 110px" class="btn btn-danger btn-sm">CLEAR</button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <!-- <?php $this->load->view('pages/trnx-reg'); ?>
+                                         <table class="table table-responsive table-bordered table-sm">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th rowspan="2" style="vertical-align:middle;text-align:center; width: 200px;">ROUTE</th>
+                                                    <th colspan="18" style="text-align:center">DAY / TRIP</th>
+                                                </tr>
+                                                <tr style="text-align:center">
+                                                    <th>RATES</th>
+                                                    <th>1</th>
+                                                    <th>2</th>
+                                                    <th>3</th>
+                                                    <th>4</th>
+                                                    <th>5</th>
+                                                    <th>6</th>
+                                                    <th>7</th>
+                                                    <th>8</th>
+                                                    <th>9</th>
+                                                    <th>10</th>
+                                                    <th>11</th>
+                                                    <th>12</th>
+                                                    <th>13</th>
+                                                    <th>14</th>
+                                                    <th>15</th>
+                                                    <th>TOTAL TRIPS</th>
+                                                    <th>TOTAL</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="text-align:center">
+                                                    <td>ALABANG</td>
+                                                    <td>600</td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td><input type="text" name="day1" size="1" maxlength="3" placeholder="0"></td>
+                                                    <td></td>
+                                                    <td>100,100.000000</td>
+                                                </tr>
+                                            </tbody>
+                                        </table> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="extended" role="tabpanel" aria-labelledby="extended-tab">profile</div>
+                            <div class="tab-pane fade" id="special" role="tabpanel" aria-labelledby="special-tab">contact</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!--end cardbody-->
+        </div> <!--end card-->
+    </div>
+</div>

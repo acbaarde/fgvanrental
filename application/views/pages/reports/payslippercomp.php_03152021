@@ -1,0 +1,160 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+<style>
+	table, tr, td {
+		border: none;
+	}
+
+	.align-center {
+		text-align: center;
+	}
+</style>
+
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-body">
+				<div class="col-md-12">
+					<table class="table table-borderless table-sm">
+						<tbody>
+							<tr>
+								<td>ref no.: 0035.</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="text-align: center;">FG VAN RENTAL</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>MONTH:</td>
+								<td style="text-align: center;">FEBRURAY 15, 2021</td>
+							</tr>
+							<tr>
+								<td>PERIOD OF:</td>
+								<td style="text-align: center;">0035</td>
+							</tr>
+							<tr>
+								<td>OPERATOR:</td>
+								<td style="text-align: center;">ALFREDO DACANAY</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="text-align: center;">F3 S020</td>
+							</tr>
+							<tr>
+								<td>TOTAL TRIPS</td>
+								<td style="text-align: center;">103</td>
+							</tr>
+							<tr>
+								<td>TOTAL AMOUNT</td>
+								<td></td>
+								<td style="text-align: right;">56,420.00</td>
+							</tr>
+							<tr>
+								<td>EXPENSES</td>
+							</tr>
+							<tr>
+								<td>10% TAX</td>
+								<td></td>
+								<td style="text-align: right;">5,642.00</td>
+							</tr>
+							<tr>
+								<td>3% ANNUAL TAX</td>
+								<td></td>
+								<td style="text-align: right;">5,642.00</td>
+							</tr>
+							<tr>
+								<td>ADMIN FEE</td>
+								<td>83.00 - 15</td>
+								<td style="text-align: right;">1,245</td>
+							</tr>
+							<tr>
+								<td>TOTAL EXPENSES</td>
+								<td></td>
+								<td style="text-align: right;">8579.60</td>
+							</tr>
+							<tr>
+								<td>NET PAYOUT</td>
+								<td></td>
+								<td style="text-align: right;">47,840.40</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-body">
+				<div class="col-md-12">
+					<table class="table table-borderless table-sm">
+						<tbody>
+							<tr>
+								<td>ref no.: 0035</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="text-align: center;">FG VAN RENTAL</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>MONTH:</td>
+								<td style="text-align: center;">FEBRURAY 15, 2021</td>
+							</tr>
+							<tr>
+								<td>PERIOD OF:</td>
+								<td style="text-align: center;">0035</td>
+							</tr>
+							<tr>
+								<td>OPERATOR:</td>
+								<td style="text-align: center;">ALFREDO DACANAY</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="text-align: center;">F3 S020</td>
+							</tr>
+							<tr>
+								<td>TOTAL TRIPS</td>
+								<td style="text-align: center;">103</td>
+							</tr>
+							<tr>
+								<td>TOTAL AMOUNT</td>
+								<td></td>
+								<td style="text-align: right;">56,420.00</td>
+							</tr>
+							<tr>
+								<td>EXPENSES</td>
+							</tr>
+							<tr>
+								<td>10% TAX</td>
+								<td></td>
+								<td style="text-align: right;">5,642.00</td>
+							</tr>
+							<tr>
+								<td>3% ANNUAL TAX</td>
+								<td></td>
+								<td style="text-align: right;">5,642.00</td>
+							</tr>
+							<tr>
+								<td>ADMIN FEE</td>
+								<td>83.00 - 15</td>
+								<td style="text-align: right;">1,245</td>
+							</tr>
+							<tr>
+								<td>TOTAL EXPENSES</td>
+								<td></td>
+								<td style="text-align: right;">8579.60</td>
+							</tr>
+							<tr>
+								<td>NET PAYOUT</td>
+								<td></td>
+								<td style="text-align: right;">47,840.40</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	</div>
+</div>

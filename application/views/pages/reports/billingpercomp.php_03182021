@@ -1,0 +1,189 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                    	<div class="row"><div class="col-sm-12">MONTH:&nbsp;&nbsp;&nbsp;FEBRUARY 15, 2021</div></div>
+                    	<div class="row"><div class="col-sm-12">PERIOD OF: nbsp;&nbsp;&nbsp;FEBRUARY 01-15</div></div>
+                    	<div class="row"><div class="col-sm-12">REFERENCE NO.:&nbsp;&nbsp;&nbsp;0035</div></div>
+                    	<div class="row"><div class="col-sm-12">TOTAL TRIP:&nbsp;&nbsp;&nbsp;1529</div></div>
+                    </div>
+                    <div class="col-md-5">
+                    	<div class="row"><div class="col-sm-12">REGULAR SCHEDULE:&nbsp;&nbsp;&nbsp;584,290.00</div></div>
+                    	<div class="row"><div class="col-sm-12">COMBINED TRIP:&nbsp;&nbsp;&nbsp;179,780.00</div></div>
+                    	<div class="row"><div class="col-sm-12">EXTENDED CLUSTER TRIP:&nbsp;&nbsp;&nbsp;86,340.00</div></div>
+                    </div>
+                    <div class="col-md-3">
+                    	<div class="card">
+	                    	<div class="card-body">
+	                    		<div class="col-sm-12" style="text-align: center; vertical-align: middle;"><h6>TOTAL</h6></div>
+		                    	<div class="col-sm-12" style="text-align: center; vertical-align: middle;"><h5>850,410.00</h5></div>
+	                    	</div>
+                    	</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="regular-tab" data-toggle="tab" href="#regular" role="tab" aria-controls="regular" aria-selected="true">Regular</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="extended-tab" data-toggle="tab" href="#extended" role="tab" aria-controls="extended" aria-selected="false">Extended</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="special-tab" data-toggle="tab" href="#special" role="tab" aria-controls="special" aria-selected="false">Special</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="regular" role="tabpanel" aria-labelledby="regular-tab">
+                                <table class="table table-bordered table-sm col-md-12">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th rowspan="2" style="vertical-align:middle;text-align:center;">ROUTE</th>
+                                            <th colspan="18" style="text-align:center">DAY / TRIP</th>
+                                        </tr>
+                                        <tr style="text-align:center">
+                                        	<th style="text-align:center">RATE</th>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                            <th>6</th>
+                                            <th>7</th>
+                                            <th>8</th>
+                                            <th>9</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>13</th>
+                                            <th>14</th>
+                                            <th>15</th>
+                                            <th>TOTAL TRIP</th>
+											<th>AMOUNT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="text-align:center">
+                                            <td>ALABANG</td>
+                                            <td>600</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr style="text-align:center">
+                                            <td>BINAN 1</td>
+                                            <td>650</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr style="text-align:center">
+                                            <td>BINAN 2</td>
+                                            <td>800</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr style="text-align:center">
+                                            <td>SAN PEDRO</td>
+                                            <td>600</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr style="text-align:center">
+                                            <td>CARMONA</td>
+                                            <td>650</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="extended" role="tabpanel" aria-labelledby="extended-tab">profile</div>
+                            <div class="tab-pane fade" id="special" role="tabpanel" aria-labelledby="special-tab">contact</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!--end cardbody-->
+        </div> <!--end card-->
+    </div>
+</div>

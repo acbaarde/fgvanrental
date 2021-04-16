@@ -1,0 +1,78 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Mylib_model extends CI_Model { 
+	public function __construct()
+	{
+		parent::__construct();
+		
+    }
+
+    public function random_string($length) { 
+		$key = '';
+		$keys = array_merge(range(0, 9), range('a', 'z'));
+
+		for ($i = 0; $i < $length; $i++) {
+			$key .= $keys[array_rand($keys)];
+		}
+
+		return $key;
+	}
+
+	public function get_active_yr(){
+		$str = "select year from aries.year where `post` != 'Y' order by `year` limit 1";
+		$query = $this->db->query($str);
+		$row = $query->row_array();
+		$res = $row['year'];
+		$query->free_result();
+		return $res;
+	}
+
+	public function getcompanys($data=''){
+		if($data != ''){
+			$optn = "  and `type` = '{$data}'";
+		}else{
+			$optn = '';
+		}
+
+		$str = "select * FROM aries.company WHERE `active` = 'Y' {$optn}";
+        return $this->db->query($str)->result_array();
+	}
+	public function getvehicles(){
+		$str = "select v.*,CONCAT(lastname,', ',firstname,' ',middlename)AS operator FROM aries.vehicles as v
+		LEFT JOIN aries.operators AS o ON o.id = v.operator_id
+		WHERE v.`active` = 'Y'";
+        return $this->db->query($str)->result_array();
+	}
+	public function getallvehicles(){
+		$str = "select v.*,CONCAT(lastname,', ',firstname,' ',middlename)AS operator FROM aries.vehicles as v
+		LEFT JOIN aries.operators AS o ON o.id = v.operator_id";
+        return $this->db->query($str)->result_array();
+	}
+	
+	public function id_ctr(){
+		$year = $this->mylib->get_active_yr();
+
+		$str = "select (id_number + 1) AS id_number from aries.id_ctr order by id_number desc limit 1";
+		$query = $this->db->query($str)->row_array();
+		if(!empty($query)){
+			$newid = $query['id_number'];
+		}else{
+			$newid = substr($year,2,2) . '00001';
+		}
+		return $newid;
+	}
+
+	public function getallroutes(){
+		$str = "select * from aries.routes ORDER BY route_name";
+		return $this->db->query($str)->result_array();
+	}
+
+	// public function num_frmt($nval=0,$nhaba=0) {
+	// 	return str_pad(number_format($nval+0,2,'.',','),$nhaba,' ',STR_PAD_LEFT);
+	// }
+
+	public function num_decimal($num = 0){
+		return number_format(round($num,2),2,'.',',');
+	}
+
+}

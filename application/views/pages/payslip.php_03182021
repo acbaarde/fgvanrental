@@ -1,0 +1,94 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h4>Payslip reports</h4>
+    <div class="btn-toolbar mb-2 mb-md-0">
+    	<div class="form-vertical">
+    		<div class="form-group">
+    			<select id="myear"><option selected value>Please select Year...</option></select>
+    			<select id="mcompany"><option selected value>Please select Company...</option></select>
+		    	<select id="mperiod"><option selected value>Please select Period...</option></select>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+<div id="payslipForm"></div>
+
+<script>
+    var payslipForm = $("#payslipForm");
+    const __payslip = {
+        initialize: function(){
+            const self = this;
+            this.loadForm();
+        },
+
+        loadForm: function(){
+            const self = this;
+            $.ajax({
+                url: 'getAllYear',
+                type: 'post',
+                dataType: 'json',
+                success: function(result){
+                    const obj = result;
+                    var p_list = [];
+                    p_list.push("<option selected value>Please select Year...</option>");
+                    $.each(obj, function(i, val){
+                        p_list.push("<option value="+this.year+">"+this.year+"</option>");
+                    });
+                    $("#myear").html(p_list);
+                }
+            });
+
+            $.ajax({
+                url: 'getCompany',
+                type: 'post',
+                dataType: 'json',
+                success: function(result){
+                    const obj = result;
+                    var p_list = [];
+                    p_list.push("<option selected value>Please select Company...</option>");
+                    $.each(obj, function(i, val){
+                        p_list.push("<option value="+this.company_id+">"+this.abbr+"</option>");
+                    });
+                    $("#mcompany").html(p_list);
+
+                    self.events();
+                }
+            });
+        },
+
+        events: function(){
+            $("#mcompany").on('change', function(){
+                console.log($("#mcompany").val());
+
+                $.ajax({
+                    url: 'getPeriod',
+                    type: 'post',
+                    data: {comp: $("#mcompany").val()},
+                    dataType: 'json',
+                    success: function(result){
+                        const obj = result;
+                        var p_list = [];
+                        p_list.push("<option selected value>Please select Period...</option>");
+                        $.each(obj, function(i, val){
+                            p_list.push("<option value="+this.cfrom+">"+this.cfrom+"</option>");
+                        });
+                        $("#mperiod").html(p_list);
+                    }
+                });
+            });
+
+            $("#mperiod").on('change', function(){
+                $.ajax({
+                    url: 'payslipForm',
+                    success: function(result){
+                        payslipForm.html(result);
+                    }
+                });
+            });
+        },
+    }
+
+    __payslip.initialize();
+</script>
