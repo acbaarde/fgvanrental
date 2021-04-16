@@ -16,7 +16,7 @@
     <script src="<?php echo base_url('assets/mycustom.js'); ?>"></script>
 
 
-    <title></title>
+    <title>FG</title>
 
     <style>
       .bd-placeholder-img {
@@ -75,7 +75,7 @@
   <body>
 
   <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="<?php echo base_url();?>"></a>
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="<?php echo base_url();?>">FG VAN RENTAL</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
