@@ -134,12 +134,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-    
-                        <ul class="list-unstyled" style="text-align: center; margin-bottom: 0;">
+                    <img src="../../assets/images/signature.png" alt="fg" style="display: block; margin-left: auto; margin-right: auto; width:200;height:100px">
+                        <!-- <ul class="list-unstyled" style="text-align: center; margin-bottom: 0;">
+
                             <li><h6 style="margin-bottom: 0;">Gilbert Liban</h6></li>
                             <li>_________________________________________</li>
                             <li>Owner / Proprietor</li>
-                        </ul>
+                        </ul> -->
 
                     </div>
                 </div>
