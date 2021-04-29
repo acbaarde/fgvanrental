@@ -67,6 +67,10 @@ class Reports extends CI_Controller {
 		echo json_encode($this->reports_model->getpertripbreakdown_rpt($this->input->post('mdata')));
 	}
 
+	public function getPerroutebreakdown_rpt(){
+		echo json_encode($this->reports_model->getperroutebreakdown_rpt($this->input->post('mdata')));
+	}
+
 	public function getPerday_rpt(){
 		echo json_encode($this->reports_model->getperday_rpt($this->input->post('mdata')));
 	}

@@ -58,6 +58,10 @@
           return pperiod;
         }
 
+        function formatUpperCase(txt){
+          return txt.toUpperCase();
+        }
+
         // function printna(elementid) {
         //     var printContents = document.getElementById(elementid).innerHTML;
         //     var originalContents = document.body.innerHTML;

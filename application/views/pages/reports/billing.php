@@ -26,6 +26,8 @@
         <a <?php echo $segment=='perday' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/view/perday');?>">PER DAY</a></li>
       <li class="nav-item">
         <a <?php echo $segment=='pertripbreakdown' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/view/pertripbreakdown');?>">PER TRIP BREAKDOWN</a></li>
+      <li class="nav-item">
+        <a <?php echo $segment=='perroutebreakdown' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/view/perroutebreakdown');?>">PER ROUTE BREAKDOWN</a></li>
     </ul>
     <div class="tab-content">
         <?php $this->load->view($segment == '' ? 'pages/reports/pertrip' : 'pages/reports/'.$segment);?>

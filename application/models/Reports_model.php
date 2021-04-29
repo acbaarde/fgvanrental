@@ -94,6 +94,51 @@ class Reports_model extends CI_Model {
         return $result;
     }
 
+    public function getperroutebreakdown_rpt($data=array()){
+        $myear = $data['myear'];
+        $mcompany = $data['mcompany'];
+        $mperiod = $data['mperiod'];
+        $mroutetype = $data['mroutetype'];
+        $dbname = "aries";
+
+        // $type = array('regular','extended','special');
+        // foreach($type as $row){
+            $str = "select 
+            rout.route_name,
+            reg.rate,
+            reg.pperiod,
+            SUM(reg.day_1)AS day_1,
+            SUM(reg.day_2)AS day_2,
+            SUM(reg.day_3)AS day_3,
+            SUM(reg.day_4)AS day_4,
+            SUM(reg.day_5)AS day_5,
+            SUM(reg.day_6)AS day_6,
+            SUM(reg.day_7)AS day_7,
+            SUM(reg.day_8)AS day_8,
+            SUM(reg.day_9)AS day_9,
+            SUM(reg.day_10)AS day_10,
+            SUM(reg.day_11)AS day_11,
+            SUM(reg.day_12)AS day_12,
+            SUM(reg.day_13)AS day_13,
+            SUM(reg.day_14)AS day_14,
+            SUM(reg.day_15)AS day_15,
+            SUM(reg.day_16)AS day_16,
+            SUM(reg.total_trip)AS total_trip,
+            SUM(reg.total_amount)AS total_amount
+            FROM {$dbname}.{$mroutetype}_sched{$myear} AS reg
+            LEFT JOIN aries.routes AS rout ON rout.id = reg.route_code AND `active` = 'Y'
+            WHERE reg.company_id = '{$mcompany}' AND reg.pperiod = '{$mperiod}' GROUP BY reg.route_code order by rout.route_name";
+            $result['routetype'] = $this->db->query($str)->result_array();
+        // }
+
+        $str = "select cmp.company_id,cmp.refno,pp.pperiod,pp.cfrom as cfrom,pp.cto as cto,pp.days FROM aries.company AS cmp
+        LEFT JOIN aries.pp{$myear} AS pp ON pp.pperiod = '{$mperiod}'
+        WHERE cmp.company_id = '{$mcompany}'";
+        $result['rpt_info'] = $this->db->query($str)->row_array();
+
+        return $result;
+    }
+
     public function getperday_rpt($data=array()){
         $myear = $data['myear'];
         $mcompany = $data['mcompany'];
