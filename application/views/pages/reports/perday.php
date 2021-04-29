@@ -54,7 +54,8 @@
                             <li>
                                 <ul class="list-inline">
                                     <li style="width: 130px;">REFERENCE NO.:</li>
-                                    <li style="display: inline"><strong id="rpt_refno"></strong></li>
+                                    <!-- <li style="display: inline"><strong id="rpt_refno"></strong></li> -->
+                                    <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
                                 </ul>
                             </li>
                         </ul>
@@ -238,6 +239,7 @@
                 const self = this;
 
                 $('#toprint').on('click', function(){
+                    perdayform.find('#ref').attr('value', $('#ref').val());
                     $('#toprint').empty();
 
                     var printContents = document.getElementById('card_id').innerHTML;

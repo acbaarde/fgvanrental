@@ -47,7 +47,8 @@
                                         </ul>
                                         <ul class="list-inline">
                                             <li style="width: 125px;">REF NO.:</li>
-                                            <li style="display: inline"><strong id="rpt_refno"></strong></li>
+                                            <!-- <li style="display: inline"><strong id="rpt_refno"></strong></li> -->
+                                            <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -377,6 +378,7 @@
                 const self = this;
 
                 $('#toprint').on('click', function(){
+                    pertripbreakdownform.find('#ref').attr('value', $('#ref').val());
                     pertripbreakdownform.find('#toprint').empty();
                     // pertripbreakdownform.removeClass('table-responsive-sm');
                     var printContents = document.getElementById('card_id').innerHTML;

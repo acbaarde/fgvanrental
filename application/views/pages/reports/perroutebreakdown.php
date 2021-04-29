@@ -368,10 +368,6 @@
                     }
                     self.loadReports();
                 });
-
-                $('#ref').on('keypress', function(){
-                    $('#ref').val(this.value);
-                });
             },
 
         }
