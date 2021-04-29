@@ -54,7 +54,7 @@
                                         <ul class="list-inline">
                                             <li style="width: 125px;">REF NO.:</li>
                                             <!-- <li style="display: inline"><strong id="rpt_refno"></strong></li> -->
-                                            <li style="display: inline"><input id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
+                                            <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -336,8 +336,8 @@
                 const self = this;
 
                 $('#toprint').on('click', function(){
+                    perroutebreakdownform.find('#ref').attr('value', $('#ref').val());
 
-                    // console.log($('#ref').val());
                     perroutebreakdownform.find('#toprint').empty();
                     // perroutebreakdownform.removeClass('table-responsive-sm');
                     var printContents = document.getElementById('card_id').innerHTML;
@@ -366,6 +366,10 @@
                         return false;
                     }
                     self.loadReports();
+                });
+
+                $('#ref').on('keypress', function(){
+                    $('#ref').val(this.value);
                 });
             },
 
