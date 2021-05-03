@@ -329,7 +329,7 @@ class Process_model extends CI_Model {
                     $str = "create table if not exists {$pansamantala}.{$temp_tbl} (
                         `company_id` varchar(1) DEFAULT '',
                         `driver_id` varchar(15) DEFAULT '',
-                        `vehicle_id` varchar(1) DEFAULT '',
+                        `vehicle_id` varchar(10) DEFAULT '',
                         `pperiod` date DEFAULT '0000-00-00',
                         `totaltrips` varchar(10) DEFAULT '0',
                         `totalamount` decimal(10,2) DEFAULT '0.00',
@@ -535,6 +535,7 @@ class Process_model extends CI_Model {
         }
 
         return $result;
+
 
     }
 
