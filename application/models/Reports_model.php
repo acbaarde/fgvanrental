@@ -82,7 +82,7 @@ class Reports_model extends CI_Model {
             SUM(reg.total_amount)AS total_amount
             FROM {$dbname}.{$row}_sched{$myear} AS reg
             LEFT JOIN aries.routes AS rout ON rout.id = reg.route_code AND `active` = 'Y'
-            WHERE reg.company_id = '{$mcompany}' AND reg.pperiod = '{$mperiod}' GROUP BY reg.route_code order by rout.route_name";
+            WHERE reg.company_id = '{$mcompany}' AND reg.pperiod = '{$mperiod}' and reg.total_trip > 0 GROUP BY reg.route_code order by rout.route_name";
             $result[$row] = $this->db->query($str)->result_array();
         }
 
@@ -127,7 +127,7 @@ class Reports_model extends CI_Model {
             SUM(reg.total_amount)AS total_amount
             FROM {$dbname}.{$mroutetype}_sched{$myear} AS reg
             LEFT JOIN aries.routes AS rout ON rout.id = reg.route_code AND `active` = 'Y'
-            WHERE reg.company_id = '{$mcompany}' AND reg.pperiod = '{$mperiod}' GROUP BY reg.route_code order by rout.route_name";
+            WHERE reg.company_id = '{$mcompany}' AND reg.pperiod = '{$mperiod}' and reg.total_trip > 0 GROUP BY reg.route_code order by rout.route_name";
             $result['routetype'] = $this->db->query($str)->result_array();
         // }
 
