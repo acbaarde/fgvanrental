@@ -39,7 +39,8 @@ class Process_model extends CI_Model {
     }
 
     public function checkpp($data=''){
-        $str = "select * FROM aries.pp2021
+        $year = $this->mylib->get_active_yr();
+        $str = "select * FROM aries.pp{$year}
         WHERE ppost != 'P'/* AND company = (SELECT company FROM aries.drivers WHERE driver_id = '{$data}') ORDER BY cfrom LIMIT 1*/";
         $result = $this->db->query($str)->row_array();
         return $result;

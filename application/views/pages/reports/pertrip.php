@@ -145,20 +145,6 @@
                     }
                 });
 
-
-                $.ajax({
-                    url: 'getPeriod',
-                    type: 'post',
-                    dataType: 'json',
-                    success: function(result){
-                        const obj = result;
-                        var p_list = ['<option selected value>Please select Period...</option>'];
-                        $.each(obj, function(i, val){
-                            p_list.push($("<option></option>").html(this.cfrom).val(this.cfrom));
-                        });
-                        $("#mperiod").html(p_list);
-                    }
-                });
                 self.loadEvents();
                 g_messageDialogViewModel.hideWaitDialog();
             },
@@ -285,6 +271,30 @@
                     document.body.innerHTML = originalContents;
 
                     location.reload();
+                });
+
+                $("#myear").on('change', function(){
+                    if($('#myear').val() == null || $('#myear').val() == ""){
+                        var p_list = ['<option selected value>Please select Period...</option>'];
+                        $("#mperiod").html(p_list);
+                    }else{
+                        $.ajax({
+                            url:  'getPeriod',
+                            type: 'post',
+                            data: {
+                                mdata: $('#myear').val()
+                            },
+                            dataType: 'json',
+                            success: function(result){
+                                const obj = result;
+                                var p_list = ['<option selected value>Please select Period...</option>'];
+                                $.each(obj, function(i, val){
+                                    p_list.push($("<option></option>").html(this.cfrom).val(this.cfrom));
+                                });
+                                $("#mperiod").html(p_list);
+                            }
+                        });
+                    }
                 });
 
                 $("#mperiod").on('change', function(){

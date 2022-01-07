@@ -10,8 +10,9 @@ class Reports_model extends CI_Model {
         return $this->db->query($str)->result_array();
     }
     
-     public function getperiod($data=''){
-        $year = $this->mylib->get_active_yr();
+     public function getperiod(){
+        $year = $this->input->post('mdata');
+        // $year = $this->mylib->get_active_yr();
         $str = "select cfrom FROM aries.pp{$year}";
         return $this->db->query($str)->result_array();
     }
