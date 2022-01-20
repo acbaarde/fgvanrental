@@ -113,4 +113,10 @@ class Datamaint extends CI_Controller {
 	public function getPeriodinfo(){
 		echo json_encode($this->datamaintmodel->getperiodinfo($this->input->post('period_id')));
 	}
+
+	public function deletePayperiod(){
+		$year = $this->mylib->get_active_yr();
+		$table_name = "pp{$year}";
+		echo json_encode($this->mylib->deleteWithId($this->input->post('payperiod_id'), $table_name));
+	}
 }

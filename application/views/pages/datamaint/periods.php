@@ -152,7 +152,7 @@
                                                             .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
                                                                 .append($('<i>').addClass('fa fa-edit'))
                                                             )
-                                                            .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', this.id)
+                                                            .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', [this.id,this.pperiod])
                                                                 .append($('<i>').addClass('fa fa-trash'))
                                                             )
                                                         )
@@ -247,7 +247,24 @@
                 });
 
                 periodsform.find('#btnDelete:button').on('click', function(){
-                    console.log(this.value);
+                    var value = this.value.split(",");
+                    var id = value[0];
+                    var pperiod = value[1];
+                    var conf = confirm("Do you want to delete payperiod " + pperiod + " ???");
+                    if(conf){
+                        $.ajax({
+                            url: '<?php echo base_url('datamaint/deletePayperiod'); ?>',
+                            type: 'post',
+                            data: { payperiod_id: id },
+                            dataType: 'json',
+                            success: function(result){
+                                if(result.status){
+                                    alert(result.message);
+                                    window.location.reload();
+                                }
+                            } 
+                        });
+                    }
                 });
             },
 

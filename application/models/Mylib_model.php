@@ -75,4 +75,25 @@ class Mylib_model extends CI_Model {
 		return number_format(round($num,2),2,'.',',');
 	}
 
+	public function deleteWithId($id, $table_name){
+		$this->db->trans_begin();
+		$str = "delete from {$table_name} where id = '{$id}'";
+		$this->db->query($str);
+		if($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			$result = array(
+				'status' => false,
+				'message' => "Error deleting records! please contact system administrator."
+			);
+		}else{
+			$this->db->trans_commit();
+			$result = array(
+				'status' => true,
+				'message' => "Record(s) deleted!",
+				'query' => $str
+			);
+		}	
+		return $result;
+	}
+
 }
