@@ -218,7 +218,7 @@
                                                     .append($('<li>').text('REGULAR'))
                                                 )
                                                 .append($('<ul>').addClass('list-inline')
-                                                    .append($('<li>').text('EXTENDED'))
+                                                    .append($('<li>').text('Combined'))
                                                 )
                                                 .append($('<ul>').addClass('list-inline')
                                                     .append($('<li>').text('SPECIAL'))

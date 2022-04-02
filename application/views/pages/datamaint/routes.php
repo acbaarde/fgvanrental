@@ -12,7 +12,7 @@
                             <select class="form-control form-control-sm" id="viewfilter" style="margin-left: 5px;">
                                 <option selected value>ALL</option>
                                 <option value="R">REGULAR</option>
-                                <option value="E">EXTENDED</option>
+                                <option value="E">COMBINED</option>
                                 <option value="S">SPECIAL</option>
                             </select>
                     </div>
@@ -77,7 +77,7 @@
                                         <label for="selroute_type">Type:</label>
                                             <select class="form-control form-control-sm" id="selroute_type">
                                                 <option selected value="R">REGULAR</option>
-                                                <option value="E">EXTENDED</option>
+                                                <option value="E">COMBINED</option>
                                                 <option value="S">SPECIAL</option>
                                             </select>
                                     </div>
@@ -146,7 +146,7 @@
                                                         .append($('<td>').text(this.route_name))
                                                         .append($('<td>').text(this.landmark))
                                                         .append($('<td>').text(this.rate))
-                                                        .append($('<td>').text(this.route_trip=='R'? 'REGULAR':this.route_trip=='E'?'EXTENDED':'SPECIAL'))
+                                                        .append($('<td>').text(this.route_trip=='R'? 'REGULAR':this.route_trip=='E'?'COMBINED':'SPECIAL'))
                                                         .append($('<td>').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
                                                         .append($('<td>')
                                                             .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
@@ -229,7 +229,7 @@
                                                         .append($('<td>').text(this.route_name))
                                                         .append($('<td>').text(this.landmark))
                                                         .append($('<td>').text(this.rate))
-                                                        .append($('<td>').text(this.route_trip=='R'? 'REGULAR':this.route_trip=='E'?'EXTENDED':'SPECIAL'))
+                                                        .append($('<td>').text(this.route_trip=='R'? 'REGULAR':this.route_trip=='E'?'COMBINED':'SPECIAL'))
                                                         .append($('<td>').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
                                                         .append($('<td>')
                                                             .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
@@ -277,7 +277,25 @@
                 });
 
                 routesform.find('#btnDelete:button').on('click', function(){
-                    console.log(this.value);
+                    var conf = confirm("Do you want to delete this record???");
+                    if(conf){
+                        $.ajax({
+                            url: '<?php echo base_url('datamaint/masterDelete'); ?>',
+                            type: 'post',
+                            data: { 
+                                id: this.value,
+                                table_name: 'routes'
+                            },
+                            dataType: 'json',
+                            success: function(result){
+                                console.log(result);
+                                if(result.status){
+                                    alert(result.message);
+                                    window.location.reload();
+                                }
+                            } 
+                        });
+                    }
                 });
             },
         }

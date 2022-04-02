@@ -131,7 +131,7 @@
                                     <a class="nav-link active" id="reg-tab" data-toggle="tab" href="#reg" role="tab" aria-controls="reg" aria-selected="true">Regular Routes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="ext-tab" data-toggle="tab" href="#ext" role="tab" aria-controls="ext" aria-selected="false">Extended Routes</a>
+                                    <a class="nav-link" id="ext-tab" data-toggle="tab" href="#ext" role="tab" aria-controls="ext" aria-selected="false">Combined Routes</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="spe-tab" data-toggle="tab" href="#spe" role="tab" aria-controls="spe" aria-selected="false">Special Routes</a>

@@ -76,7 +76,7 @@ $refno = $info['refno'];
 
         events: function () {
             $('#nav-body').navs({
-                items: ["Regular","Extended","Special"],
+                items: ["Regular","Combined","Special"],
                 link:  ["loadRegularForm","loadExtendedForm","loadSpecialForm"],
             });
             // $('#confirmdialog').dialog({

@@ -224,7 +224,25 @@
 
                 });
                 operatorsform.find('#btnDelete:button').on('click', function(){
-                    console.log(this.value);
+                    var conf = confirm("Do you want to delete this record???");
+                    if(conf){
+                        $.ajax({
+                            url: '<?php echo base_url('datamaint/masterDelete'); ?>',
+                            type: 'post',
+                            data: { 
+                                id: this.value,
+                                table_name: 'operators'
+                            },
+                            dataType: 'json',
+                            success: function(result){
+                                console.log(result);
+                                if(result.status){
+                                    alert(result.message);
+                                    window.location.reload();
+                                }
+                            } 
+                        });
+                    }
                 });
 
             },

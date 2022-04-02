@@ -249,13 +249,18 @@
                 periodsform.find('#btnDelete:button').on('click', function(){
                     var value = this.value.split(",");
                     var id = value[0];
-                    var pperiod = value[1];
+                    var pperiod = value[1].split('-');
+                    var year = pperiod[0]; //get year
+                    
                     var conf = confirm("Do you want to delete payperiod " + pperiod + " ???");
                     if(conf){
                         $.ajax({
-                            url: '<?php echo base_url('datamaint/deletePayperiod'); ?>',
+                            url: '<?php echo base_url('datamaint/masterDelete'); ?>',
                             type: 'post',
-                            data: { payperiod_id: id },
+                            data: { 
+                                id: id,
+                                table_name: 'pp'+year
+                             },
                             dataType: 'json',
                             success: function(result){
                                 if(result.status){

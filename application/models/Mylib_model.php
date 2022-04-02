@@ -75,7 +75,10 @@ class Mylib_model extends CI_Model {
 		return number_format(round($num,2),2,'.',',');
 	}
 
-	public function deleteWithId($id, $table_name){
+	public function deleteWithId($data){
+		$table_name = isset($data['table_name']) ? $data['table_name'] : '';
+		$id = isset($data['id']) ? $data['id'] : '';
+		
 		$this->db->trans_begin();
 		$str = "delete from {$table_name} where id = '{$id}'";
 		$this->db->query($str);

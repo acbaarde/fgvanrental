@@ -58,7 +58,7 @@ $(function(){
             success: function(result){
                 const obj = result;
                 if(obj==false){
-                    alert("No EXTENDED Routes tagged in this Record ...");
+                    alert("No COMBINED Routes tagged in this Record ...");
                 }else{
                 var days = obj['total_days'];
                 var thcolspan = 3;

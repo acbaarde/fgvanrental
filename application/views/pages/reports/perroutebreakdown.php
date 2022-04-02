@@ -12,7 +12,7 @@
                     <select id="mroutetype" style="margin-left: 5px;">
                         <option selected value>Please select Route type...</option>
                         <option value="regular">Regular</option>
-                        <option value="extended">Extended</option>
+                        <option value="extended">Combined</option>
                         <option value="special">Special</option>
                     </select>
                 </div>

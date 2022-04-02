@@ -65,7 +65,7 @@
                                             <li style="display: inline" id="rpt_amnt_regular"></li>
                                         </ul>
                                         <ul class="list-inline">
-                                            <li style="width: 130px;">EXTENDED TRIP:</li>
+                                            <li style="width: 130px;">COMBINED TRIP:</li>
                                             <li style="display: inline" id="rpt_amnt_extended"></li>
                                         </ul>
                                         <ul class="list-inline">
@@ -134,7 +134,7 @@
                         <table class="table table-bordered table-responsive-sm table-sm">
                             <thead class="thead-light" style="text-align: center">
                                 <tr>
-                                    <th style="vertical-align:middle;text-align:center; width: 150px;">EXTENDED</th>
+                                    <th style="vertical-align:middle;text-align:center; width: 150px;">COMBINED</th>
                                     <th class="thcolspan" style="text-align:center;">DAY / TRIP</th>
                                 </tr>
                                 <tr class="thdays" style="text-align: center;">
