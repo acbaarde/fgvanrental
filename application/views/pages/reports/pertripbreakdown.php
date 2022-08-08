@@ -336,7 +336,7 @@
                                             .append($('<td>').text(this.total_trip))
                                             .append($('<td>').attr('id','totalamnt_'+this.id).text(toparseFloat(this.rate * this.total_trip)))
                                         )
-                                        totalamount += parseInt(this.rate) * parseInt(this.total_trip);
+                                        totalamount += parseFloat(this.rate) * parseInt(this.total_trip);
                                         totaltrips += parseInt(this.total_trip);
                                 });
                             }
@@ -345,7 +345,7 @@
                             pertripbreakdownform.find('#rpt_amnt_'+typ).text(toparseFloat(totalamount));
 
                             ttrips += parseInt(totaltrips);
-                            ttotal += parseInt(totalamount);
+                            ttotal += parseFloat(totalamount);
                         });
 
                         for(var i = 1; i <= days; i++){

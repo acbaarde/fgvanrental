@@ -194,7 +194,7 @@
                                 self.thhead(i,from,to,this);
                                 self.loadtbody(i,data[this],days,this);
                                 totaltrips_ += parseInt(perdriverbreakdownform.find('#tfoot_trip_'+this+i).val());
-                                totalamnt_ += parseInt(perdriverbreakdownform.find('#tfoot_amnt_'+this+i).val());
+                                totalamnt_ += parseFloat(perdriverbreakdownform.find('#tfoot_amnt_'+this+i).val());
                                 
                             });
                             perdriverbreakdownform.find('#totaltrips_'+i).text(totaltrips_);
@@ -275,7 +275,7 @@
                             .append($('<td>').text(this.total_amount))
 
                     trips += parseInt(this.total_trip);
-                    amnt += parseInt(this.total_amount);
+                    amnt += parseFloat(this.total_amount);
                 });
                 perdriverbreakdownform.find('#tfoot_trip_'+title+id).val(trips).text(trips);
                 perdriverbreakdownform.find('#tfoot_amnt_'+title+id).val(amnt).text(toparseFloat(amnt));

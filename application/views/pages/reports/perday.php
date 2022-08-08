@@ -207,10 +207,10 @@
 
                                     .append($('<td>').text(toparseFloat(this.chargeperday)).attr('style','text-align: center; vertical-align: middle;'))
                                     .append($('<td>').text(this.days).attr('style','text-align: center; vertical-align: middle;'))
-                                    .append($('<td>').text(toparseFloat(parseInt(this.totalamount))).attr('style','text-align: center; vertical-align: middle;'))
+                                    .append($('<td>').text(toparseFloat(parseFloat(this.totalamount))).attr('style','text-align: center; vertical-align: middle;'))
                                 )
                                 .append($('<tr>').append($('<td>')).append($('<td>')).append($('<td>')).append($('<td>')))
-                            total_amount += parseInt(this.totalamount);
+                            total_amount += parseFloat(this.totalamount);
                         });
 
                         perdayform.find('#total_amount').text(toparseFloat(total_amount));
