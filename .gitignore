@@ -2,7 +2,6 @@
 .htaccess
 application/config/config.php
 application/config/database.php
-aries.sql
 
 application/cache/*
 !application/cache/index.html
