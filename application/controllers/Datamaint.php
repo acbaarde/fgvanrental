@@ -117,4 +117,22 @@ class Datamaint extends CI_Controller {
 	public function masterDelete(){
 		echo json_encode($this->mylib->deleteWithId($this->input->post()));
 	}
+	public function getDepartment(){
+		echo json_encode($this->datamaintmodel->getdepartment());
+	}
+	public function saveDepartment(){
+		$type = $this->input->post('type');
+		if($type == "ADD"){
+			echo json_encode($this->datamaintmodel->insertdepartment($this->input->post('mdata')));
+		}else{
+			echo json_encode($this->datamaintmodel->updatedepartment($this->input->post('mdata')));
+		}
+	}
+	public function getDepartmentinfo(){
+		echo json_encode($this->datamaintmodel->getdepartmentinfo($this->input->post('id')));
+	}
+
+	public function getRoute(){
+		echo json_encode($this->datamaintmodel->getroute($this->input->post('pperiod')));
+	}
 }

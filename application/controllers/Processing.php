@@ -47,6 +47,27 @@ class Processing extends CI_Controller {
 	public function loadSpecialForm(){
         $this->load->view('pages/processing/special-form');
 	}
+	public function loadManualForm(){
+        $this->load->view('pages/processing/manual-form');
+	}
+	public function manual_trnx(){
+		$driverid = $this->input->post('driver_id');
+		$data['type'] = $this->input->post('type');
+		$data['pperiod'] = $this->processmodel->checkpp();
+		$data['info'] = $this->processmodel->driverinfo($driverid);
+		echo json_encode($this->processmodel->manualtrnx($data));
+	}
+	public function saveManualTrip(){
+		$type = $this->input->post('type');
+		if($type == "ADD"){
+			echo json_encode($this->processmodel->insertmanualtrip($this->input->post('mdata')));
+		}else{
+			echo json_encode($this->processmodel->updatemanualtrip($this->input->post('mdata')));
+		}
+	}
+	public function getManualinfo(){
+		echo json_encode($this->processmodel->getmanualinfo($this->input->post('manualtrip_id')));
+	}
 
 	public function regular_trnx(){
 		$driverid = $this->input->post('driver_id');

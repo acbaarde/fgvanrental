@@ -86,7 +86,10 @@ class Reports extends CI_Controller {
 		$data['mperiod'] = $this->input->get('mperiod');
 
 		$result = $this->reports_model->paypertripproc($data);
-		
+		if(count($result['result'])==0){
+			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
+			die();
+		}
 		$this->load->view('pages/reports/paypertrip-rpt', $result);
 	}
 	
@@ -97,6 +100,10 @@ class Reports extends CI_Controller {
 		$data['mperiod'] = $this->input->get('mperiod');
 
 		$result = $this->reports_model->payperdayproc($data);
+		if(count($result['result'])==0){
+			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
+			die();
+		}
 		
 		$this->load->view('pages/reports/payperday-rpt', $result);
 	}
@@ -108,8 +115,29 @@ class Reports extends CI_Controller {
 		$data['mperiod'] = $this->input->get('mperiod');
 
 		$result = $this->reports_model->paydriverproc($data);
+		if(count($result['result'])==0){
+			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
+			die();
+		}
 		
 		$this->load->view('pages/reports/paydrivers-rpt', $result);
+	}
+
+	public function getManualBilling(){
+		echo json_encode($this->reports_model->getmanualbilling($this->input->post('mdata')));
+	}
+
+	public function paymanual_rpt(){
+		$data['myear'] = $this->input->get('myear');
+		$data['mcompany'] = $this->input->get('mcompany');
+		$data['mperiod'] = $this->input->get('mperiod');
+
+		$result = $this->reports_model->paypertripproc($data);
+		if(count($result['result'])==0){
+			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
+			die();
+		}
+		$this->load->view('pages/reports/paymanual-rpt', $result);
 	}
 
 }

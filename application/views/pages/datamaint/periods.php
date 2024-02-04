@@ -147,7 +147,7 @@
                                                         .append($('<td>').text(this.cfrom))
                                                         .append($('<td>').text(this.cto))
                                                         .append($('<td>').text(this.days))
-                                                        .append($('<td>').text(this.ppost == 'P' ? 'POSTED' : 'OPEN'))
+                                                        .append($('<td>').attr('style', this.ppost=='P'?'color:#bb2124':'color:#22bb33').text(this.ppost == 'P' ? 'POSTED' : 'OPEN'))
                                                         .append($('<td>')
                                                             .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
                                                                 .append($('<i>').addClass('fa fa-edit'))

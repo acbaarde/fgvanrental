@@ -41,6 +41,11 @@
                 </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="pagination-demo"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ADD Modal -->
@@ -120,25 +125,36 @@
                     async: false,
                     success: function(result){
                         const obj = result;
-                        $.each(obj, function(i,v){
-                            operatorsform.find('#operatorlist').append($('<tr>').attr('style', 'text-align: center;')
-                                                        .append($('<td>').text(this.lastname.toUpperCase()))
-                                                        .append($('<td>').text(this.firstname.toUpperCase()))
-                                                        .append($('<td>').text(this.middlename.toUpperCase()))
-                                                        .append($('<td>').text(this.contact.toUpperCase()))
-                                                        .append($('<td>').text(this.address.toUpperCase()))
-                                                        .append($('<td>').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
-                                                        .append($('<td>')
-                                                            .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
-                                                                .append($('<i>').addClass('fa fa-edit'))
+                        $('#pagination-demo').pagination({
+                            dataSource: obj,
+                            pageSize: 10,
+                            showSizeChanger: true,
+                            showNavigator: true,
+                            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+                            position: 'top',
+                            callback: function(data, pagination){
+                                operatorsform.find('#operatorlist').empty();
+                                $.each(data, function(i,v){
+                                    operatorsform.find('#operatorlist').append($('<tr>').attr('style', 'text-align: center;')
+                                                                .append($('<td>').text(this.lastname.toUpperCase()))
+                                                                .append($('<td>').text(this.firstname.toUpperCase()))
+                                                                .append($('<td>').text(this.middlename.toUpperCase()))
+                                                                .append($('<td>').text(this.contact.toUpperCase()))
+                                                                .append($('<td>').text(this.address.toUpperCase()))
+                                                                .append($('<td>').addClass(this.active=='Y'?'classStatusActive':'classStatusInactive').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
+                                                                .append($('<td>')
+                                                                    .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
+                                                                        .append($('<i>').addClass('fa fa-edit'))
+                                                                    )
+                                                                    .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', this.id)
+                                                                        .append($('<i>').addClass('fa fa-trash'))
+                                                                    )
+                                                                )
                                                             )
-                                                            .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', this.id)
-                                                                .append($('<i>').addClass('fa fa-trash'))
-                                                            )
-                                                        )
-                                                    )
-                        });
-                        self.loadEvents();
+                                });
+                                self.loadEvents();
+                            }
+                        });    
                     }
                 });
             },
@@ -217,12 +233,10 @@
                             operatorsform.find('#address').val(obj['address']);
                             operatorsform.find('#contactno').val(obj['contact']);
                             operatorsform.find('#stat').val(obj['active']);
-
                         }
                     });
-                    
-
                 });
+                
                 operatorsform.find('#btnDelete:button').on('click', function(){
                     var conf = confirm("Do you want to delete this record???");
                     if(conf){

@@ -8,7 +8,7 @@ class Datamaint_model extends CI_Model {
     public function getdrivers(){
         $dbname = "aries";
         $tablename = "drivers";
-        $str = "select * from {$dbname}.{$tablename} order by lastname";
+        $str = "select * from {$dbname}.{$tablename} order by if(active='Y',0,1),lastname, firstname, middlename";
         return $this->db->query($str)->result_array();
     }
     public function searchdriver($data=''){
@@ -31,7 +31,7 @@ class Datamaint_model extends CI_Model {
     public function getoperators(){
         $dbname = "aries";
         $tablename = "operators";
-        $str = "select * from {$dbname}.{$tablename} order by lastname";
+        $str = "select * from {$dbname}.{$tablename} order by if(active='Y',0,1),lastname, firstname, middlename";
         return $this->db->query($str)->result_array();
     }
 
@@ -390,7 +390,7 @@ class Datamaint_model extends CI_Model {
         return $result;
     }
     public function getroutesbytype($data=''){
-        $str = "select * from aries.routes where route_trip = '{$data}'";
+        $str = "select * from aries.routes where route_trip = '{$data}' ORDER BY IF(active='Y',0,1),route_name,landmark";
         return $this->db->query($str)->result_array();
     }
 
@@ -536,5 +536,60 @@ class Datamaint_model extends CI_Model {
 
         return $result;
     }
+    public function getdepartment(){
+        $str = "SELECT * FROM department order by active desc";
+        $result = $this->db->query($str)->result_array();
+        return $result;
+    }
+    public function getdepartmentinfo($data=''){
+        $tablename = "department";
+        $str = "select * from {$tablename} where id='{$data}'";
+        return $this->db->query($str)->row_array();
+    }
+    public function insertdepartment($data=array()){
+        $tablename = 'department';
+        $insert = array(
+            'dept_name' => $data['deptname'],
+            'active' => $data['active']
+            );     
 
+        $this->db->trans_begin();
+            $this->db->insert($tablename, $insert);
+        $this->db->trans_complete();
+
+        if($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            $result = false;
+        }else{
+            $this->db->trans_commit();
+            $result = true;
+        }
+        return $result;
+    }
+
+    public function updatedepartment($data=array()){
+        $tablename = 'department';
+        $value = array(
+            'dept_name' => $data['deptname'],
+            'active' => $data['active']
+        );
+        
+        $this->db->trans_begin();
+            $this->db->update($tablename, $value, "id=". $this->db->escape($data['recid']));
+        $this->db->trans_complete();
+
+        if($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            $result = false;
+        }else{
+            $this->db->trans_commit();
+            $result = true;
+        }
+        return $result;
+    }
+    public function getroute($data){
+        $year = $this->mylib->get_active_yr();
+        $str = "select route from manual_trips{$year} where pperiod = '{$data}' group by route";
+        return $this->db->query($str)->result_array();
+    }
 }

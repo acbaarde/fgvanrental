@@ -39,6 +39,11 @@
                 </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="pagination-demo"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ADD Modal -->
@@ -120,27 +125,36 @@
                     async: false,
                     success: function(result){
                         const obj = result;
-                        $.each(obj, function(i,v){
-                            vehiclesform.find('#vehiclelist').append($('<tr>').attr('style', 'text-align: center;')
-                                                        .append($('<td>').text(this.plate_number))
-                                                        .append($('<td>').text(this.unit))
-                                                        .append($('<td>').text(this.operator))
-                                                        .append($('<td>').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
-                                                        .append($('<td>')
-                                                            .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
-                                                                .append($('<i>').addClass('fa fa-edit'))
+                        $('#pagination-demo').pagination({
+                            dataSource: obj,
+                            pageSize: 10,
+                            showSizeChanger: true,
+                            showNavigator: true,
+                            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+                            position: 'top',
+                            callback: function(data, pagination){
+                                vehiclesform.find('#vehiclelist').empty();
+                                $.each(data, function(i,v){
+                                    vehiclesform.find('#vehiclelist').append($('<tr>').attr('style', 'text-align: center;')
+                                                                .append($('<td>').text(this.plate_number))
+                                                                .append($('<td>').text(this.unit))
+                                                                .append($('<td>').text(this.operator))
+                                                                .append($('<td>').addClass(this.active=='Y'?'classStatusActive':'classStatusInactive').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
+                                                                .append($('<td>')
+                                                                    .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.id)
+                                                                        .append($('<i>').addClass('fa fa-edit'))
+                                                                    )
+                                                                    .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', this.id)
+                                                                        .append($('<i>').addClass('fa fa-trash'))
+                                                                    )
+                                                                )
                                                             )
-                                                            .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', this.id)
-                                                                .append($('<i>').addClass('fa fa-trash'))
-                                                            )
-                                                        )
-                                                    )
+                                });
+                                self.loadEvents();
+                            }
                         });
-                        self.loadEvents();
                     }
                 });
-
-                
             },
 
             loadEvents: function(){

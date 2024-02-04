@@ -60,7 +60,6 @@ $(function(){
             dataType: 'json',
             // async: false,
             success: function(result){
-                
                 const obj = result;
                 if(obj == false){
                     alert("No REGULAR Routes tagged in this Record ...");

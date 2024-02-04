@@ -41,7 +41,14 @@
                 </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="pagination-demo"></div>
+            </div>
+        </div>
     </div>
+    
+    
 
     <!-- ADD Modal -->
     <div class="modal fade" id="driversModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -221,21 +228,30 @@
                     async: false,
                     success: function(result){
                         const obj = result;
-                        $.each(obj, function(i,v){
-                            driversform.find('#driverlist').append($('<tr>').attr('style', 'text-align: center;')
-                                                        .append($('<td>').append($('<u>').html(this.driver_id).val(this.driver_id)))
-                                                        .append($('<td>').text(this.lastname.toUpperCase()))
-                                                        .append($('<td>').text(this.firstname.toUpperCase()))
-                                                        .append($('<td>').text(this.middlename.toUpperCase()))
-                                                        .append($('<td>').text(this.contact.toUpperCase()))
-                                                        .append($('<td>').text(this.address.toUpperCase()))
-                                                        .append($('<td>').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
-                                                    )
-                        });
-
-                        self.loadEvents();
+                        $('#pagination-demo').pagination({
+                            dataSource: obj,
+                            pageSize: 10,
+                            showSizeChanger: true,
+                            showNavigator: true,
+                            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+                            position: 'top',
+                            callback: function(data, pagination){
+                                driversform.find('#driverlist').empty();
+                                $.each(data, function(i,v){
+                                    driversform.find('#driverlist').append($('<tr>').attr('style', 'text-align: center;')
+                                                                .append($('<td>').append($('<u>').html(this.driver_id).val(this.driver_id)))
+                                                                .append($('<td>').text(this.lastname.toUpperCase()))
+                                                                .append($('<td>').text(this.firstname.toUpperCase()))
+                                                                .append($('<td>').text(this.middlename.toUpperCase()))
+                                                                .append($('<td>').text(this.contact.toUpperCase()))
+                                                                .append($('<td>').text(this.address.toUpperCase()))
+                                                                .append($('<td>').addClass(this.active=='Y'?'classStatusActive':'classStatusInactive').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
+                                                            )
+                                });
+                                self.loadEvents();
+                            }
+                        })
                     }
-
                 });
             },
 

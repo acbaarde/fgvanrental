@@ -43,6 +43,11 @@
                 </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="pagination-demo"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ADD Modal -->
@@ -161,27 +166,38 @@
                     async: false,
                     success: function(result){
                         const obj = result;
-                        $.each(obj, function(i,v){
-                            companysform.find('#companylist').append($('<tr>').attr('style', 'text-align: center;')
-                                                        .append($('<td>').text(this.company_name))
-                                                        .append($('<td>').text(this.address))
-                                                        .append($('<td>').text(this.email))
-                                                        .append($('<td>').text(this.contact))
-                                                        .append($('<td>').text(this.refno))
-                                                        .append($('<td>').text(this.abbr))
-                                                        .append($('<td>').text(this.type == 'T' ? 'PER TRIP' : this.type == 'D' ? 'PER DAY' : ''))
-                                                        .append($('<td>').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
-                                                        .append($('<td>')
-                                                            .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.company_id)
-                                                                .append($('<i>').addClass('fa fa-edit'))
+                        $('#pagination-demo').pagination({
+                            dataSource: obj,
+                            pageSize: 10,
+                            showSizeChanger: true,
+                            showNavigator: true,
+                            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+                            position: 'top',
+                            callback: function(data, pagination){
+                                companysform.find('#companylist').empty();
+                                $.each(data, function(i,v){
+                                    companysform.find('#companylist').append($('<tr>').attr('style', 'text-align: center;')
+                                                                .append($('<td>').text(this.company_name))
+                                                                .append($('<td>').text(this.address))
+                                                                .append($('<td>').text(this.email))
+                                                                .append($('<td>').text(this.contact))
+                                                                .append($('<td>').text(this.refno))
+                                                                .append($('<td>').text(this.abbr))
+                                                                .append($('<td>').text(this.type == 'T' ? 'PER TRIP' : this.type == 'D' ? 'PER DAY' : ''))
+                                                                .append($('<td>').addClass(this.active=='Y'?'classStatusActive':'classStatusInactive').text(this.active == 'Y' ? 'ACTIVE' : 'INACTIVE'))
+                                                                .append($('<td>')
+                                                                    .append($('<button>').addClass('btn btn-warning btn-sm').attr('type','button').attr('id','btnUpdate').attr('style','margin-right: 5px;').attr('value', this.company_id)
+                                                                        .append($('<i>').addClass('fa fa-edit'))
+                                                                    )
+                                                                    .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', this.company_id)
+                                                                        .append($('<i>').addClass('fa fa-trash'))
+                                                                    )
+                                                                )
                                                             )
-                                                            .append($('<button>').addClass('btn btn-danger btn-sm').attr('type','button').attr('id','btnDelete').attr('value', this.company_id)
-                                                                .append($('<i>').addClass('fa fa-trash'))
-                                                            )
-                                                        )
-                                                    )
-                        });
-                        self.loadEvents();
+                                });
+                                self.loadEvents();
+                            }
+                        });    
                     }
                 });
             },

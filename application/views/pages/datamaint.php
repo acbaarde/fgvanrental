@@ -38,6 +38,9 @@
             <li class="nav-item">
                 <a <?php echo $segment=='periods' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('datamaint/view/periods');?>">Periods</a>
             </li>
+            <li class="nav-item">
+                <a <?php echo $segment=='department' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('datamaint/view/department');?>">Department</a>
+            </li>
         </ul>
         <div class="tab-content">
             <?php $this->load->view( ($segment == '' || $segment=='view') ? 'pages/datamaint/drivers' : 'pages/datamaint/'.$segment);?>

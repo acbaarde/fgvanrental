@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h4>Processing</h4>
+    <h4>Process Trips</h4>
     <!-- <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
           <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -29,6 +29,11 @@
     </table>
   </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="pagination-demo"></div>
+    </div>
+</div>
 
 <script>
   const driverlist = $("#driverlist");
@@ -49,29 +54,38 @@
         dataType: 'json',
         success: function(result){
           const obj = result;
-          console.log(obj);
-          if(obj.length > 0){
-            const p_list = [];
-            $.each(obj, function(key,val){
-              p_list.push($('<tr>')
-                .append($('<td>')
-                  .append($('<u>')
-                    .html(this.driver_id)
-                    .val(this.driver_id)))
-                .append($('<td>')
-                  .html(this.fullname))
-                .append($('<td>')
-                  .html(this.unit))
-                .append($('<td>')
-                  .html(this.plate_number)))
-            });
-            tblbody.append(p_list);
-            self.events();
-            g_messageDialogViewModel.hideWaitDialog();
-          }else{
-            tblbody.append("No records found!!!");
-            g_messageDialogViewModel.hideWaitDialog();
-          }
+          $('#pagination-demo').pagination({
+                            dataSource: obj,
+                            pageSize: 10,
+                            showSizeChanger: true,
+                            showNavigator: true,
+                            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+                            position: 'top',
+                            callback: function(data, pagination){
+                              if(data.length > 0){
+                                const p_list = [];
+                                $.each(data, function(key,val){
+                                  p_list.push($('<tr>')
+                                    .append($('<td>')
+                                      .append($('<u>')
+                                        .html(this.driver_id)
+                                        .val(this.driver_id)))
+                                    .append($('<td>')
+                                      .html(this.fullname))
+                                    .append($('<td>')
+                                      .html(this.unit))
+                                    .append($('<td>')
+                                      .html(this.plate_number)))
+                                });
+                                tblbody.empty().append(p_list);
+                                self.events();
+                                g_messageDialogViewModel.hideWaitDialog();
+                              }else{
+                                tblbody.append("No records found!!!");
+                                g_messageDialogViewModel.hideWaitDialog();
+                              }
+                            }
+          });
         }
       });
     },

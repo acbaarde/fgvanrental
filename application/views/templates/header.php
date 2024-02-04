@@ -8,13 +8,17 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css'); ?>">
     <link href="<?php echo base_url('assets/css/mystyle.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/dashboard.css'); ?>" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  
+    <link href="<?php echo base_url('assets/fontawesome-free-5.7.0-web/css/all.css'); ?>" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> -->
+
     <script src="<?php echo base_url('assets/js/jquery-3.5.1.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/js/jquery.blockUI.min.js');?>"></script>
     <script src="<?php echo base_url('assets/mycustom.js'); ?>"></script>
-
+    <script src="<?php echo base_url('assets/Pagination.js'); ?>"></script>
+    
+    <link href="<?php echo base_url('assets/bootstrap-datepicker.css'); ?>" rel="stylesheet">
+    <script src="<?php echo base_url('assets/bootstrap-datepicker.js'); ?>"></script>
 
     <title>FG</title>
 

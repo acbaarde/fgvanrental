@@ -174,28 +174,9 @@ class Reports_model extends CI_Model {
     }
 
     public function paypertripproc($data=array()){
-        $myear = $data['myear'];
         $mcompany = $data['mcompany'];
         $mperiod = $data['mperiod'];
-        $dbname = "aries";
-
-        $str = "select pay.refno,
-        pay.pperiod,
-        CONCAT(oper.firstname,' ',oper.lastname)AS operator_name,
-        vehi.plate_number,
-        pay.totaltrips,
-        pay.totalamount,
-        pay.tax_10,
-        pay.tax_3,
-        pay.admin_fee,
-        pay.days,
-        pay.otherdeduc,
-        pay.totalexpenses,
-        pay.net
-        FROM {$dbname}.payroll_pertrip AS pay
-        LEFT JOIN {$dbname}.vehicles AS vehi ON vehi.id = pay.vehicle_id
-        LEFT JOIN {$dbname}.operators AS oper ON oper.id = vehi.operator_id
-        WHERE pay.company_id = '{$mcompany}' AND DATE(pay.pperiod) = DATE('{$mperiod}')";
+        $str = "SELECT * FROM paypertrip_view WHERE company_id = '{$mcompany}' AND DATE(pperiod) = DATE('{$mperiod}')";
         $result['result'] = $this->db->query($str)->result_array();
         return $result;
     }
@@ -312,6 +293,40 @@ class Reports_model extends CI_Model {
         }
         
         return $result;
+    }
+
+    public function getmanualbilling($data=array()){
+        $year = $this->mylib->get_active_yr();
+        $company_id = $data['mcompany_id'];
+        $pperiod = $data['mperiod'];
+        $dept_id = $data['mdepartment_id'];
+        $dates = str_replace(",", "','", $data['mdates']);
+        $group_by = isset($data['group_by']) ?  $data['group_by'] : "aa.id";
+        $order_by = isset($data['order_by']) ? " ORDER BY " .  $data['order_by'] : "";
+
+        $str = "SELECT aa.id,
+        aa.driver_id,
+        bb.company,
+        dd.company_name,
+        aa.pperiod, 
+        aa.dept_id,
+        cc.dept_name,
+        IF(COUNT(route)>1,CONCAT(route,'(',COUNT(route),')'),route) AS route,
+        DATE_FORMAT(aa.datetime, '%M %d, %Y') AS dated,
+        SUM(aa.rates) AS amount
+        FROM manual_trips{$year} AS aa
+        LEFT JOIN drivers AS bb ON bb.driver_id = aa.driver_id
+        LEFT JOIN department AS cc ON cc.id = aa.dept_id
+        left join company as dd on dd.company_id = bb.company
+        WHERE bb.company = '{$company_id}'
+        AND aa.pperiod = '{$pperiod}'
+        AND aa.dept_id = '{$dept_id}'
+        AND DATE(`datetime`) IN ('$dates')
+        GROUP BY {$group_by} {$order_by}";
+        $result['result'] = $this->db->query($str)->result_array();
+
+        return $result;
+
     }
 
 }

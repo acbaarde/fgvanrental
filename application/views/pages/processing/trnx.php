@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cfrom = substr($pperiod['cfrom'],8,2);
 $cto = substr($pperiod['cto'],8,2);
-$pperiod = $pperiod['cfrom'];
+$pperiod = $pperiod['pperiod'];
 $fullname = $info['FULLNAME'];
 $driver_id = $info['driver_id'];
 $unit = $info['unit'];
@@ -46,6 +46,7 @@ $refno = $info['refno'];
                                     <li style="display: inline;"><?php echo $company_name;?></li>     
                                 </ul>
                                 <ul class="list-inline">
+                                    <input type="hidden" id="pperiod" value="<?php echo $pperiod; ?>">
                                     <li style="width:110px;"><strong>PERIOD:</strong></li>
                                     <li style="display: inline; color: #C21807;"><strong><?php echo $pperiod; ?></strong></li>     
                                 </ul>
@@ -76,8 +77,8 @@ $refno = $info['refno'];
 
         events: function () {
             $('#nav-body').navs({
-                items: ["Regular","Combined","Special"],
-                link:  ["loadRegularForm","loadExtendedForm","loadSpecialForm"],
+                items: ["Regular Trips","Combined Trips","Special Trips","Manual Trips"],
+                link:  ["loadRegularForm","loadExtendedForm","loadSpecialForm","loadManualForm"],
             });
             // $('#confirmdialog').dialog({
             //     dialogClass: 'no-close',

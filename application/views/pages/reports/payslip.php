@@ -25,8 +25,10 @@
         <a <?php echo $segment=='' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/payslip');?>">PER TRIP</a></li>
       <li class="nav-item">
         <a <?php echo $segment=='payperday' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/payslip/payperday');?>">PER DAY</a></li>
-      <li class="nav-item">
+        <li class="nav-item">
         <a <?php echo $segment=='paydrivers' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/payslip/paydrivers');?>">DRIVERS</a></li>
+        <li class="nav-item">
+        <a <?php echo $segment=='paymanual' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/payslip/paymanual');?>">MANUAL PAYSLIP</a></li>
     </ul>
     <div class="tab-content">
     <?php $this->load->view($segment == '' ? 'pages/reports/paypertrip' : 'pages/reports/'.$segment);?>

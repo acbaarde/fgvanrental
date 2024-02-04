@@ -45,7 +45,7 @@ class Mylib_model extends CI_Model {
 	}
 	public function getallvehicles(){
 		$str = "select v.*,CONCAT(lastname,', ',firstname,' ',middlename)AS operator FROM aries.vehicles as v
-		LEFT JOIN aries.operators AS o ON o.id = v.operator_id";
+		LEFT JOIN aries.operators AS o ON o.id = v.operator_id order by IF(v.active='Y',0,1),v.`unit`,v.plate_number";
         return $this->db->query($str)->result_array();
 	}
 	
@@ -63,7 +63,7 @@ class Mylib_model extends CI_Model {
 	}
 
 	public function getallroutes(){
-		$str = "select * from aries.routes ORDER BY route_name";
+		$str = "select * from aries.routes ORDER BY IF(active='Y',0,1),route_name,landmark";
 		return $this->db->query($str)->result_array();
 	}
 
@@ -78,7 +78,12 @@ class Mylib_model extends CI_Model {
 	public function deleteWithId($data){
 		$table_name = isset($data['table_name']) ? $data['table_name'] : '';
 		$id = isset($data['id']) ? $data['id'] : '';
+		$year = isset($data['year']) ? $this->mylib->get_active_yr() : '';
 		
+		if(isset($data['year'])){
+			$table_name = $table_name . $year;
+		}
+
 		$this->db->trans_begin();
 		$str = "delete from {$table_name} where id = '{$id}'";
 		$this->db->query($str);
@@ -95,7 +100,7 @@ class Mylib_model extends CI_Model {
 				'message' => "Record(s) deleted!",
 				'query' => $str
 			);
-		}	
+		}
 		return $result;
 	}
 

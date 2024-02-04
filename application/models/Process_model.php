@@ -40,9 +40,36 @@ class Process_model extends CI_Model {
 
     public function checkpp($data=''){
         $year = $this->mylib->get_active_yr();
+
         $str = "select * FROM aries.pp{$year}
         WHERE ppost != 'P'/* AND company = (SELECT company FROM aries.drivers WHERE driver_id = '{$data}') ORDER BY cfrom LIMIT 1*/";
+        
+        $this->db->db_debug = FALSE;
+        if(!$this->db->query($str)){
+            if($this->db->error()['message'] == "Table 'aries.pp{$year}' doesn't exist"){
+                $prevyr = $year-1;
+                $create = "CREATE TABLE IF NOT EXISTS pp{$year} like pp{$prevyr}";
+                $this->db->query($create);
+
+                $pp = "INSERT INTO pp{$year} (cutoff,pperiod,cfrom,cto,ppost,`days`)(
+                    select
+                    cutoff,
+                    date_add(pperiod, interval 1 year)as pperiod,
+                    DATE_ADD(cfrom, INTERVAL 1 YEAR)AS cfrom,
+                    DATE_ADD(cto, INTERVAL 1 YEAR)AS cto,
+                    '' as ppost,
+                    `days`
+                    from pp{$prevyr})";
+                $this->db->query($pp);
+            }
+        }
+        $this->db->db_debug = TRUE;
+
         $result = $this->db->query($str)->row_array();
+        if(empty($result)){
+            echo "<script>alert('No Active Payperiod...');</script>";
+            die();
+        };
         return $result;
     }
 
@@ -84,6 +111,7 @@ class Process_model extends CI_Model {
 
     public function regulartrnx($data=array()){
         $year = $this->mylib->get_active_yr();
+        $prevyr = $year-1;
         $cfrom = substr($data['pperiod']['cfrom'],8,2);
         $cto = substr($data['pperiod']['cto'],8,2);
         $driver_id = $data['info']['driver_id'];
@@ -97,16 +125,22 @@ class Process_model extends CI_Model {
         if($data['type'] == 'regular'){
             $routes = explode("xOx",$data['info']['reg_routes']);
             $route_trip = 'R';
-            $tablename = "regular_sched{$year}";
+            $tbname = "regular_sched";
         }elseif($data['type'] == 'extended'){
             $routes = explode("xOx",$data['info']['ext_routes']);
             $route_trip = 'E';
-            $tablename = "extended_sched{$year}";
+            $tbname = "extended_sched";
         }elseif($data['type'] == 'special'){
             $routes = explode("xOx",$data['info']['spe_routes']);
             $route_trip = 'S';
-            $tablename = "special_sched{$year}";
+            $tbname = "special_sched";
         }
+        $tablename = $tbname.$year;
+        $prevtb = $tbname.$prevyr;
+
+        // CREATE TABLE IF NOT EXISTS
+        $createtbl = "CREATE TABLE IF NOT EXISTS {$dbname}.{$tablename} like {$dbname}.{$prevtb}";
+        $this->db->query($createtbl);
 
         if(count($routes)==1){
             //NO ROUTES TAGGED IN DRIVER RECORDS
@@ -334,6 +368,8 @@ class Process_model extends CI_Model {
                         `pperiod` date DEFAULT '0000-00-00',
                         `totaltrips` varchar(10) DEFAULT '0',
                         `totalamount` decimal(10,2) DEFAULT '0.00',
+                        `manualtrips` varchar(10) DEFAULT '0',
+                        `manualtripsamount` decimal(10,2) DEFAULT '0.00',
                         `otherdeduc` decimal(10,2) DEFAULT '0.00',
                         `tax_10` decimal(10,2) DEFAULT '0.00',
                         `tax_3` decimal(10,2) DEFAULT '0.00',
@@ -345,8 +381,9 @@ class Process_model extends CI_Model {
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
                     $this->db->query($str);
 
-                    $str = "insert into {$pansamantala}.{$temp_tbl} (company_id,driver_id,pperiod,totaltrips,totalamount)
-                    (select aa.company_id,aa.driver_id,aa.pperiod,SUM(aa.total_trip)AS total_trips,SUM(aa.total_amount) AS total_amount 
+                    $str = "insert into {$pansamantala}.{$temp_tbl} (company_id,driver_id,pperiod,totaltrips,totalamount,manualtrips,manualtripsamount)
+                    (select aa.company_id,aa.driver_id,aa.pperiod,SUM(aa.total_trip)AS total_trips,SUM(aa.total_amount) AS total_amount,
+                    0 as manualtrips, 0 as manualtripsamount
                     FROM
                     (SELECT * FROM {$dbname}.regular_sched{$myear} WHERE company_id = '{$comp}' and pperiod = '{$mperiod}'
                     UNION ALL 
@@ -368,14 +405,28 @@ class Process_model extends CI_Model {
                     WHERE aa.company_id = bb.company_id";
                     $this->db->query($str);
 
+                    //PROCESS MANUAL TRIPS PAYROLL
+                    $str = "update {$pansamantala}.{$temp_tbl} as aa, (select driver_id,pperiod,sum(rates) as amount,count(id) as trips from manual_trips{$myear} group by driver_id,pperiod) as bb
+                    set aa.manualtrips = bb.trips,
+                    aa.manualtripsamount = bb.amount
+                    where aa.driver_id = bb.driver_id and bb.pperiod = aa.pperiod and aa.company_id = '{$comp}'";
+                    $this->db->query($str);
+                    //END MANUAL TRIPS PAYROLL
+
                     $str = "update {$pansamantala}.{$temp_tbl} 
-                    set tax_10 = totalamount * .10,tax_3 = totalamount * .03,admin_fee = 83 * days
+                    set tax_10 = ((totalamount + manualtripsamount) * .10),
+                    tax_3 = ((totalamount + manualtripsamount) * .03)
+                    where company_id = '{$comp}' and pperiod = '{$mperiod}' and (totalamount + manualtripsamount) > 0";
+                    $this->db->query($str);
+
+                    $str = "update {$pansamantala}.{$temp_tbl}
+                    set admin_fee = 83 * days
                     where company_id = '{$comp}' and pperiod = '{$mperiod}' and totalamount > 0";
                     $this->db->query($str);
 
                     $str = "update {$pansamantala}.{$temp_tbl} 
                     set totalexpenses = tax_10 + tax_3 + admin_fee + otherdeduc,
-                    net = (totalamount - (tax_10 + tax_3 + admin_fee))
+                    net = ((totalamount + manualtripsamount) - (tax_10 + tax_3 + admin_fee))
                     where company_id = '{$comp}' and pperiod = '{$mperiod}'";
                     $this->db->query($str);
 
@@ -384,7 +435,7 @@ class Process_model extends CI_Model {
                     $sstr = "delete from {$dbname}.payroll_pertrip where company_id = '{$comp}' and pperiod = '{$mperiod}'";
                     $this->db->query($sstr);
 
-                    $sstr = "insert into {$dbname}.payroll_pertrip (company_id,driver_id,vehicle_id,pperiod,totaltrips,totalamount,tax_10,tax_3,admin_fee,days,totalexpenses,net,refno)(select company_id,driver_id,vehicle_id,pperiod,totaltrips,totalamount,tax_10,tax_3,admin_fee,days,totalexpenses,net,refno from {$pansamantala}.{$temp_tbl})";
+                    $sstr = "insert into {$dbname}.payroll_pertrip (company_id,driver_id,vehicle_id,pperiod,totaltrips,totalamount,manualtrips,manualtripsamount,tax_10,tax_3,admin_fee,days,totalexpenses,net,refno)(select company_id,driver_id,vehicle_id,pperiod,totaltrips,totalamount,manualtrips,manualtripsamount,tax_10,tax_3,admin_fee,days,totalexpenses,net,refno from {$pansamantala}.{$temp_tbl})";
                     $this->db->query($sstr);
 
                     //PROCESS PAYROLL OF PERTRIP DRIVERS
@@ -540,5 +591,78 @@ class Process_model extends CI_Model {
 
     }
 
+    public function manualtrnx($data=array()){
+        $myear = $this->mylib->get_active_yr();
+        $prevyr = $myear-1;
+        $driver_id = $data['info']['driver_id'];
+        $pperiod = $data['pperiod']['pperiod'];
+
+        $str = "CREATE TABLE IF NOT EXISTS manual_trips{$myear} like manual_trips{$prevyr}";
+        $this->db->query($str);
+
+        $str="select aa.*,bb.dept_name From manual_trips{$myear} as aa 
+        left join department as bb on bb.id = aa.dept_id
+        where aa.driver_id = '{$driver_id}' and aa.pperiod = '{$pperiod}'
+        order by aa.`datetime`";
+        $result = $this->db->query($str)->result_array();
+        return $result;
+    }
+    public function insertmanualtrip($data=array()){
+        $year = $this->mylib->get_active_yr();
+        $tablename = "manual_trips{$year}";
+        
+        $insert = array(
+            'driver_id' => $data['driver_id'],
+            'dept_id' => $data['dept_id'],
+            'pperiod' => $data['pperiod'],
+            'route' => $data['route'],
+            'rates' => $data['rates'],
+            'datetime' => $data['datetime'],
+            );     
+
+        $this->db->trans_begin();
+            $this->db->insert($tablename, $insert);
+        $this->db->trans_complete();
+
+        if($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            $result = false;
+        }else{
+            $this->db->trans_commit();
+            $result = true;
+        }
+        return $result;
+    }
+
+    public function updatemanualtrip($data=array()){
+        $year = $this->mylib->get_active_yr();
+        $tablename = "manual_trips{$year}";
+        $value = array(
+            'driver_id' => $data['driver_id'],
+            'dept_id' => $data['dept_id'],
+            'pperiod' => $data['pperiod'],
+            'route' => $data['route'],
+            'rates' => $data['rates'],
+            'datetime' => $data['datetime'],
+        );
+        $this->db->trans_begin();
+            $this->db->update($tablename, $value, "id=". $this->db->escape($data['recid']));
+        $this->db->trans_complete();
+
+        if($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            $result = false;
+        }else{
+            $this->db->trans_commit();
+            $result = true;
+        }
+        return $result;
+    }
+
+    public function getmanualinfo($data){
+        $year = $this->mylib->get_active_yr();
+        $str = "select * from aries.manual_trips{$year} where id='{$data}'";
+        return $this->db->query($str)->row_array();
+    }
 
 }
