@@ -133,6 +133,17 @@ class Reports extends CI_Controller {
 		$data['mperiod'] = $this->input->get('mperiod');
 
 		$result = $this->reports_model->paypertripproc($data);
+
+		if(count($result['result'])>0){
+			$arrRes = array();
+			foreach($result['result'] as $rw){
+				if($rw['manualtripsamount']>0){
+					array_push($arrRes, $rw);
+				}
+			}
+			$result['result'] = $arrRes;
+		}
+		
 		if(count($result['result'])==0){
 			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
 			die();
