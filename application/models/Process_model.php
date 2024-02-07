@@ -414,9 +414,9 @@ class Process_model extends CI_Model {
                     //END MANUAL TRIPS PAYROLL
 
                     $str = "update {$pansamantala}.{$temp_tbl} 
-                    set tax_10 = ((totalamount + manualtripsamount) * .10),
-                    tax_3 = ((totalamount + manualtripsamount) * .03)
-                    where company_id = '{$comp}' and pperiod = '{$mperiod}' and (totalamount + manualtripsamount) > 0";
+                    set tax_10 = (totalamount * .10),
+                    tax_3 = (totalamount * .03)
+                    where company_id = '{$comp}' and pperiod = '{$mperiod}' and totalamount > 0";
                     $this->db->query($str);
 
                     $str = "update {$pansamantala}.{$temp_tbl}
@@ -426,7 +426,7 @@ class Process_model extends CI_Model {
 
                     $str = "update {$pansamantala}.{$temp_tbl} 
                     set totalexpenses = tax_10 + tax_3 + admin_fee + otherdeduc,
-                    net = ((totalamount + manualtripsamount) - (tax_10 + tax_3 + admin_fee))
+                    net = (totalamount - (tax_10 + tax_3 + admin_fee))
                     where company_id = '{$comp}' and pperiod = '{$mperiod}'";
                     $this->db->query($str);
 

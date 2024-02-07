@@ -67,12 +67,21 @@ $refno = $info['refno'];
 </div>
 
 <script>
-    
     const __navs = {
         self: "",
         initialize: function () {
             self = this;
             self.events();
+
+            $('a[data-toggle="tab"]').parent().on('show.bs.tab', function(e) {
+                localStorage.setItem('activeTab', $(e.currentTarget).attr('id'));
+            });
+
+            var activeTab = localStorage.getItem('activeTab');
+            if(activeTab){
+                $('#'+activeTab).find('a').click();
+            }
+
         },
 
         events: function () {
@@ -96,6 +105,8 @@ $refno = $info['refno'];
             $('#confirmdialogbody').html(dialogbody);
             $('#confirmdialog').dialog('open');
             $('#confirmdialog').dialog("option", "title", dialogheader);
+            
+            // this.loadEvents();
         },
 
         dialog_execute: function (yes, no) {
@@ -115,8 +126,22 @@ $refno = $info['refno'];
                     }
                 }
             });
-        }
+        },
 
+        // loadEvents: function(){
+        //     console.log("TEST")
+        //     $("#trnxform").find('.nav nav-tabs').on('click', function(){
+        //             var activeTab = localStorage.getItem('activeTab');
+        //             if(activeTab){
+        //                 var tabnum = activeTab.slice(-1);
+        //                 console.log(tabnum)
+        //                 console.log($('#nav-body_li_menu0 a[href="' + activeTab + '"]'))
+        //             }
+        //         }
+        //     );
+        // },
+
+        
     };
     __navs.initialize();
 
