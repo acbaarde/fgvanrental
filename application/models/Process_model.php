@@ -200,7 +200,7 @@ class Process_model extends CI_Model {
         $route_codes = substr($route_codes,0,strlen($route_codes)-1) . ")";
 
         $str = "insert into {$pansamantala}.{$temp_tbl} (driver_id,vehicle_id,company_id,route_code,rate,pperiod,day_1,day_2,day_3,day_4,day_5,day_6,day_7,day_8,day_9,day_10,day_11,day_12,day_13,day_14,day_15,day_16,total_trip,total_amount)
-        (select driver_id,vehicle_id,company_id,route_code,rate,pperiod,day_1,day_2,day_3,day_4,day_5,day_6,day_7,day_8,day_9,day_10,day_11,day_12,day_13,day_14,day_15,day_16,total_trip,total_amount from {$dbname}.{$tablename} where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}' and route_code in {$route_codes})";
+        (select driver_id,vehicle_id,company_id,route_code,rate,pperiod,day_1,day_2,day_3,day_4,day_5,day_6,day_7,day_8,day_9,day_10,day_11,day_12,day_13,day_14,day_15,day_16,total_trip,total_amount from {$dbname}.{$tablename} where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}' and route_code in {$route_codes} group by driver_id,route_code,pperiod,company_id)";
         $this->db->query($str);
         
         $str = "select * from {$pansamantala}.{$temp_tbl} where driver_id = '{$driver_id}' and company_id = '{$company_id}' and pperiod = '{$pperiod}'";
