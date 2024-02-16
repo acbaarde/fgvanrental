@@ -45,7 +45,7 @@
                             <li>
                                 <ul class="list-inline">
                                     <li style="width: 130px;">STATEMENT DATE:</li>
-                                    <li style="display: inline"><strong id="rpt_stdate"></strong></li>
+                                    <li style="display: inline"><input value id="dateref" type="text"></li>
                                 </ul>
                             </li>
                         </ul>
@@ -243,6 +243,8 @@
                 });
 
                 $('#toprint').on('click', function(){
+                    manualbillingform.find('#dateref').attr('value', $('#dateref').val());
+                    manualbillingform.find('#dateref').attr('style', 'border: 0;');
                     manualbillingform.find('#ref').attr('value', $('#ref').val());
                     $('#toprint').empty();
                     
