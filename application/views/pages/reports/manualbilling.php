@@ -193,7 +193,8 @@
                     var mperiod = $('#mperiod').val();
                     var mdepartment_id = $('#mdepartment').val();
                     var mdates = $('#multidates').val();
-                    manualbillingform.find('#rpt_stdate').text(formatDateString(mperiod));
+                    var cDate = new Date();
+                    manualbillingform.find('#rpt_stdate').text(formatDateString(cDate));
 
                     $.ajax({
                         url: '<?php echo base_url('reports/getManualBilling'); ?>',
