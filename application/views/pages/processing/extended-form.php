@@ -54,7 +54,7 @@ $(function(){
                 driver_id: driver_id, type: 'extended'
             },
             dataType: 'json',
-            // async: false,
+            async: false,
             success: function(result){
                 const obj = result;
                 if(obj==false){
@@ -76,6 +76,7 @@ $(function(){
                 extendedform.find('#thdays').append($('<th>').text('')).append($('<th>').text(''));
                 extendedform.find('#thcolspan').attr('colspan', thcolspan);
 
+                extendedform.find('tbody').empty();
                 $.each(obj['result'], function(i,v){
 
                     extendedform.find('tbody').append($('<tr>').attr('id',this.id).attr('style','text-align:center;')

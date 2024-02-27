@@ -56,7 +56,7 @@ $(function(){
                 type: 'special'
             },
             dataType: 'json',
-            // async: false,
+            async: false,
             success: function(result){
                 const obj = result;
                 if(obj == false){
@@ -79,6 +79,7 @@ $(function(){
                 specialform.find('#thdays').append($('<th>').text('')).append($('<th>').text(''));
                 specialform.find('#thcolspan').attr('colspan', thcolspan);
 
+                specialform.find('tbody').empty();
                 $.each(obj['result'], function(i,v){
                     specialform.find('tbody').append($('<tr>').attr('id',this.id).attr('style','text-align:center;')
                                                 .append($('<td>').text(this.route_name))
