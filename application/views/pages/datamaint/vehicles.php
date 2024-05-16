@@ -207,8 +207,9 @@
                         success: function(result){
                             const obj = result;
                             if(obj==true){
-                                alert("Record Saved!!!");
-                                location.reload();
+                                if(alert("Record Saved!!!")){
+                                    location.reload();
+                                }
                             }else{
                                 alert("Error: Inserting!!!");
                                 console.log(obj);

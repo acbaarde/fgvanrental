@@ -204,8 +204,9 @@
                             const obj = result;
                             console.log(obj);
                             if(obj==true){
-                                alert("Record Saved!!!");
-                                location.reload();
+                                if(alert("Record Saved!!!")){
+                                    location.reload();
+                                }
                             }else{
                                 alert("Error: Inserting!!!");
                                 return false;
