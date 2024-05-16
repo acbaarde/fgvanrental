@@ -200,9 +200,7 @@
                             console.log(obj);
                         
                             if(obj==true){
-                                if(alert("Record Saved!!!")){
-                                    location.reload();
-                                }
+                                window.location.reload();
                             }else{
                                 alert("Error: Inserting!!!");
                                 return false;

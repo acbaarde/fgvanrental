@@ -245,9 +245,7 @@
                         success: function(result){
                             const obj = result;
                             if(obj==true){
-                                if(alert("Record Saved!!!")){
-                                    location.reload();
-                                }
+                                window.location.reload();
                             }else{
                                 alert("Error: Inserting!!!");
                                 return false;
