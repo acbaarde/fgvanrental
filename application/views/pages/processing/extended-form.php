@@ -117,7 +117,7 @@ $(function(){
                                                 .append($('<td>').text(this.total_trip))
                                                 .append($('<td>').text(toparseFloat(this.rate * this.total_trip)))
                                             )
-                                            totalamount += parseInt(this.rate) * parseInt(this.total_trip);
+                                            totalamount += parseFloat(this.rate) * parseFloat(this.total_trip);
                                             totaltrips += parseInt(this.total_trip);
                 });
 
