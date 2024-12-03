@@ -20,7 +20,9 @@
         <a <?php echo $segment=='perroutebreakdown' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/view/perroutebreakdown');?>">PER ROUTE BREAKDOWN</a></li>
       <li class="nav-item">
         <a <?php echo $segment=='manualbilling' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/view/manualbilling');?>">MANUAL BILLING</a></li>
-    </ul>
+        <li class="nav-item">
+        <a <?php echo $segment=='newbilling' ? ' class="nav-link active"':  ' class="nav-link"';?> href="<?php echo base_url('reports/view/newbilling');?>">NEW BILLING</a></li>
+      </ul>
     <div class="tab-content">
         <?php $this->load->view($segment == '' ? 'pages/reports/pertrip' : 'pages/reports/'.$segment);?>
     </div>

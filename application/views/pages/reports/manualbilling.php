@@ -73,16 +73,16 @@
                                 </tr>
                             </thead>
                             <tbody id="manualbillinglist">
-                                <tr>
+                                <!-- <tr>
                                     <td style="text-align: center ">ALABANG TO EK (VICE VERSA)</td>
                                     <td style="text-align: center">REQUESTED BY: OPTODEV DECEMBER 11, 2023</td>
                                     <td style="text-align: center">10,020.00</td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                             <tfoot>
                                 <tr style="text-align: center;">
                                     <td style="text-align: right;" colspan="2"><strong>TOTAL :</strong></td>
-                                    <td><strong id="total_amount">10,000.00</strong></td>
+                                    <td><strong id="total_amount"></strong></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -122,22 +122,6 @@
                             p_list.push($("<option></option>").html(this.year).val(this.year));
                         });
                         $("#myear").html(p_list);
-                    }
-                });
-
-                $.ajax({
-                    url: '<?php echo base_url('reports/getCompany'); ?>',
-                    type: 'post',
-                    data: { type: 'T'}, //T as PER TRIP
-                    dataType: 'json',
-                    success: function(result){
-                        const obj = result;
-                        // console.log(obj);
-                        var p_list = ['<option selected value>Please select Company...</option>'];
-                        $.each(obj, function(i, val){
-                            p_list.push($("<option></option>").html(this.abbr).val(this.company_id));
-                        });
-                        $("#mcompany").html(p_list);
                     }
                 });
 

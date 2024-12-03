@@ -92,6 +92,19 @@ class Reports_model extends CI_Model {
         WHERE cmp.company_id = '{$mcompany}'";
         $result['rpt_info'] = $this->db->query($str)->row_array();
 
+        $str = "SELECT  
+        bb.company_name,
+        bb.tinno,
+        bb.address,
+        aa.pperiod,
+        sum(total_trip) as total_trip,
+        SUM(aa.total_amount) AS amount
+        FROM (SELECT * FROM regular_sched{$myear} UNION ALL SELECT * FROM special_sched{$myear} UNION ALL SELECT * FROM extended_sched{$myear}) AS aa
+        left join company as bb on bb.company_id = aa.company_id
+        WHERE bb.company_id = '{$mcompany}'
+        AND aa.pperiod = '{$mperiod}'";
+        $result['result'] = $this->db->query($str)->result_array();
+
         return $result;
     }
 
@@ -300,7 +313,7 @@ class Reports_model extends CI_Model {
         $company_id = $data['mcompany_id'];
         $pperiod = $data['mperiod'];
         $dept_id = $data['mdepartment_id'];
-        $dates = str_replace(",", "','", $data['mdates']);
+        $dates = isset($data['mdates']) ? " AND DATE(`datetime`) IN ('". str_replace(",", "','", $data['mdates'])."') "  : "";
         $group_by = isset($data['group_by']) ?  $data['group_by'] : "aa.id";
         $order_by = isset($data['order_by']) ? " ORDER BY " .  $data['order_by'] : "";
 
@@ -308,12 +321,18 @@ class Reports_model extends CI_Model {
         aa.driver_id,
         bb.company,
         dd.company_name,
+        dd.tinno,
+        dd.address,
         aa.pperiod, 
         aa.dept_id,
         cc.dept_name,
         IF(COUNT(route)>1,CONCAT(route,'(',COUNT(route),')'),route) AS route,
         DATE_FORMAT(aa.datetime, '%M %d, %Y') AS dated,
-        SUM(aa.rates) AS amount
+        aa.datetime as `datetime`,
+        SUM(aa.rates) AS amount,
+        DATE_FORMAT(aa.datetime, '%M') AS dmonth,
+        DATE_FORMAT(aa.datetime, '%Y') AS dyear,
+        group_concat(distinct day(`datetime`)) as ddays
         FROM manual_trips{$year} AS aa
         LEFT JOIN drivers AS bb ON bb.driver_id = aa.driver_id
         LEFT JOIN department AS cc ON cc.id = aa.dept_id
@@ -321,7 +340,7 @@ class Reports_model extends CI_Model {
         WHERE bb.company = '{$company_id}'
         AND aa.pperiod = '{$pperiod}'
         AND aa.dept_id = '{$dept_id}'
-        AND DATE(`datetime`) IN ('$dates')
+        {$dates}
         GROUP BY {$group_by} {$order_by}";
         $result['result'] = $this->db->query($str)->result_array();
 

@@ -30,6 +30,7 @@
                         <tr style="text-align: center;">
                             <th>COMPANY NAME</th>
                             <th>ADDRESS</th>
+                            <th>TIN no.</th>
                             <th>EMAIL</th>
                             <th>CONTACT</th>
                             <th>REFERENCE</th>
@@ -84,7 +85,13 @@
                                 <input type="text" class="form-control form-control-sm" id="address">
                             </div>
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="tinno">Tin no.: </label>
+                                        <input type="text" class="form-control form-control-sm" id="tinno" placeholder="000-000-000-000">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="email">Email: </label>
                                         <input type="email" class="form-control form-control-sm" id="email">
@@ -179,6 +186,7 @@
                                     companysform.find('#companylist').append($('<tr>').attr('style', 'text-align: center;')
                                                                 .append($('<td>').text(this.company_name))
                                                                 .append($('<td>').text(this.address))
+                                                                .append($('<td>').text(this.tinno))
                                                                 .append($('<td>').text(this.email))
                                                                 .append($('<td>').text(this.contact))
                                                                 .append($('<td>').text(this.refno))
@@ -222,6 +230,7 @@
                     var type = companysmodal.find('#titleModal').text();
                     var company_id = companysmodal.find('#company_id').val();
                     var seltype = companysmodal.find('#seltype').val();
+                    var tinno = companysmodal.find('#tinno').val();
                     
                     $.ajax({
                         url: '<?php echo base_url('datamaint/saveCompany'); ?>',
@@ -237,7 +246,8 @@
                                 contact: contactno,
                                 refno: refno,
                                 stat: stat,
-                                seltype: seltype
+                                seltype: seltype,
+                                tinno: tinno
                             }
                         },
                         dataType: 'json',
@@ -278,7 +288,7 @@
                             companysform.find('#abbr').val(obj['abbr']);
                             companysform.find('#stat').val(obj['active']);
                             companysform.find('#seltype').val(obj['type']);
-
+                            companysform.find('#tinno').val(obj['tinno']);
                         }
                     });
                     

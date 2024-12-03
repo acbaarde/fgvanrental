@@ -127,6 +127,19 @@ class Reports extends CI_Controller {
 		echo json_encode($this->reports_model->getmanualbilling($this->input->post('mdata')));
 	}
 
+	public function getNewBiling(){
+		$deptId = $this->input->post('mdata')['mdepartment_id'];
+		if($deptId == 0){
+			$data['myear'] = $this->input->post('mdata')['myear'];
+			$data['mcompany'] = $this->input->post('mdata')['mcompany_id'];
+			$data['mperiod'] = $this->input->post('mdata')['mperiod'];
+
+			echo json_encode($this->reports_model->getpertripbreakdown_rpt($data));
+		}else{
+			echo json_encode($this->reports_model->getmanualbilling($this->input->post('mdata')));
+		}
+	}
+
 	public function paymanual_rpt(){
 		$data['myear'] = $this->input->get('myear');
 		$data['mcompany'] = $this->input->get('mcompany');

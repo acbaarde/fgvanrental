@@ -288,7 +288,8 @@ class Datamaint_model extends CI_Model {
             'abbr' => strtoupper($data['abbr']),
             'active' => $data['stat'],
             'refno' => $data['refno'],
-            'type' => $data['seltype']
+            'type' => $data['seltype'],
+            'tinno' => $data['tinno']
             );     
 
         $this->db->trans_begin();
@@ -322,7 +323,8 @@ class Datamaint_model extends CI_Model {
             'refno' => $data['refno'],
             'abbr' => strtoupper($data['abbr']),
             'active' => $data['stat'],
-            'type' => $data['seltype']
+            'type' => $data['seltype'],
+            'tinno' => $data['tinno']
         );
         
         $this->db->trans_begin();
