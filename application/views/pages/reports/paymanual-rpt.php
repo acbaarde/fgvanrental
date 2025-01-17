@@ -26,7 +26,7 @@ foreach($result as $row){
     $pdf->Text($x + 52,$y,$row['refno']);
 
     $pdf->SetFont('Times','B',13);
-    $pdf->Text($x + 25,$y + 5,"FG VAN RENTAL");
+    $pdf->Text($x + 25,$y + 5, $sysinfo['abbr']);
 
     $pdf->SetFont('Times','',11);
     $pdf->Text($x,$y+15,"MONTH:");
@@ -81,7 +81,7 @@ foreach($result as $row){
     $pdf->Text($x + 52,$y,$row['refno']);
 
     $pdf->SetFont('Times','B',13);
-    $pdf->Text($x + 25,$y + 5,"FG VAN RENTAL");
+    $pdf->Text($x + 25,$y + 5, $sysinfo['abbr']);
 
     $pdf->SetFont('Times','',11);
     $pdf->Text($x,$y+15,"MONTH:");

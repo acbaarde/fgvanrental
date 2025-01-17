@@ -23,7 +23,7 @@ $pg = 0;
 
 foreach($result as $row){
     $pdf->SetFont('Times','B',13);
-    $pdf->Text($x + 27,$y,"FG VAN RENTAL");
+    $pdf->Text($x + 27,$y, $sysinfo['abbr']);
     $pdf->SetFont('Times','',11);
     $pdf->Text($x + 10,$y+5,"Contact No. 0926 058 1888 / 0927 307 9766");
     $pdf->Text($x + 32,$y+10,"PAY OUT SLIP");
@@ -97,7 +97,7 @@ foreach($result as $row){
     $x = 116;
 
     $pdf->SetFont('Times','B',13);
-    $pdf->Text($x + 27,$y,"FG VAN RENTAL");
+    $pdf->Text($x + 27,$y, $sysinfo['abbr']);
     $pdf->SetFont('Times','',11);
     $pdf->Text($x + 10,$y+5,"Contact No. 0926 058 1888 / 0927 307 9766");
     $pdf->Text($x + 32,$y+10,"PAY OUT SLIP");

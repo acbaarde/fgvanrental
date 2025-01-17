@@ -92,6 +92,7 @@ class Reports extends CI_Controller {
 			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
 			die();
 		}
+		$result['sysinfo'] = $this->mylib->getsysinfo();
 		$this->load->view('pages/reports/paypertrip-rpt', $result);
 	}
 	
@@ -106,7 +107,7 @@ class Reports extends CI_Controller {
 			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
 			die();
 		}
-		
+		$result['sysinfo'] = $this->mylib->getsysinfo();
 		$this->load->view('pages/reports/payperday-rpt', $result);
 	}
 
@@ -121,7 +122,7 @@ class Reports extends CI_Controller {
 			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
 			die();
 		}
-		
+
 		$this->load->view('pages/reports/paydrivers-rpt', $result);
 	}
 
@@ -171,6 +172,7 @@ class Reports extends CI_Controller {
 			echo "<script>if(confirm('No Records found!!!')){window.close();}</script>";
 			die();
 		}
+		$result['sysinfo'] = $this->mylib->getsysinfo();
 		$this->load->view('pages/reports/paymanual-rpt', $result);
 	}
 
