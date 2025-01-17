@@ -27,20 +27,18 @@
     <div class="col-md-12">
         <div class="card" id="card_id">
             <div class="card-body">
-                <div class="form-group row">
-                    <img src="../../assets/images/logofg.png" alt="fg" style="display: block; margin-left: auto; margin-right: auto; width:500px;height:100px">
-                </div>
+                <?php $this->load->view('pages/reports/rptheader'); ?>
 
                 <div class="form-group row">
                     <div class="col-md-12" style="text-align: center;">
-                        <h5><strong>FG VAN RENTAL BILLING STATEMENT <span id="rpt_title"></span></strong></h5>
+                        <h5><strong>BILLING STATEMENT <span id="rpt_title"></span></strong></h5>
                         <h6><strong>SALES INVOICE</strong></h6>
                         <h6  style="text-align: left; padding: 0 5px;"><strong>SPECIAL TRIP</strong></h6>
                     </div>
                 </div>
                 
                 <div class="form-group row">
-                    <div class="col-md-8">
+                    <div class="col-sm-8">
                         <ul class="list-unstyled">
                             <li>
                                 <ul class="list-inline">
@@ -50,7 +48,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <ul class="list-unstyled" style="float: right;">
                             <li>
                                 <ul class="list-inline">

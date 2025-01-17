@@ -92,7 +92,7 @@
                                             .append($('<div>').addClass('form-group row').attr('style', 'margin-bottom: 5px;')
                                                 .append($('<div>').addClass('col-md-12')
                                                     .append($('<h5>').attr('style','margin-bottom: 0;')
-                                                        .append($('<strong>').text('FG VAN RENTAL'))
+                                                        .append($('<strong>').text(obj['sysinfo'].name))
                                                     )
                                                 )
                                             )

@@ -104,4 +104,14 @@ class Mylib_model extends CI_Model {
 		return $result;
 	}
 
+	public function getsysinfo(){
+		$data = "SELECT * FROM aries.sysinfo";
+		return $this->db->query($data)->row_array();
+	}
+
+	public function getsigna(){
+		$data = "SELECT * FROM aries.signatories";
+		return $this->db->query($data)->result_array();
+	}
+
 }

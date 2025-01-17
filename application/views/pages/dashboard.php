@@ -2,14 +2,14 @@
 // $datetime = date("YYYY-mm-dd");
 ?>
 <div class="row">
-  <img src="./assets/images/logofg.png" alt="fg" style="display: block; margin-left: auto; margin-right: auto;">
+  <img src="./assets/images/logogv.jpg" alt="logogv.jpg" style="display: block; margin-left: auto; margin-right: auto; width: 40%; height: 40%;">
 </div>
 <div class="row">
   <div class="col-md-12">
     <ul class="list-unstyled" style="text-align: center;">
-      <li><strong>Address: Blk 6 Lot 34 A Area F Brgy. San Pedro Sapang Palay City of SJDM, Bulacan</strong></li>
-      <li><strong>Contact No. 0926-0581-888 / 0927-3079-766</strong></li>
-      <li><strong>Owner / Proprietor: Gilbert Liban</strong></li>
+      <li><strong>Address: <?php echo $sysinfo['address'] ?></strong></li>
+      <li><strong>Contact No.: <?php echo $sysinfo['contact'] ?></strong></li>
+      <li><strong>Owner / Proprietor: <?php echo $sysinfo['owner'] ?></strong></li>
     </ul>
   </div>
 </div>

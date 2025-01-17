@@ -135,4 +135,11 @@ class Datamaint extends CI_Controller {
 	public function getRoute(){
 		echo json_encode($this->datamaintmodel->getroute($this->input->post('pperiod')));
 	}
+
+	public function getSysinfo(){
+		echo json_encode($this->mylib->getsysinfo());
+	}
+	public function getSigna(){
+		echo json_encode($this->mylib->getsigna());
+	}
 }

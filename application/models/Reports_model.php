@@ -305,6 +305,7 @@ class Reports_model extends CI_Model {
             }
         }
         
+        $result['sysinfo'] = $this->mylib->getsysinfo();
         return $result;
     }
 
@@ -312,7 +313,7 @@ class Reports_model extends CI_Model {
         $year = $this->mylib->get_active_yr();
         $company_id = $data['mcompany_id'];
         $pperiod = $data['mperiod'];
-        $dept_id = $data['mdepartment_id'];
+        $dept_id = $data['mdepartment_id']  == -1 ? "" : " AND aa.dept_id = '{$data['mdepartment_id']}'";
         $dates = isset($data['mdates']) ? " AND DATE(`datetime`) IN ('". str_replace(",", "','", $data['mdates'])."') "  : "";
         $group_by = isset($data['group_by']) ?  $data['group_by'] : "aa.id";
         $order_by = isset($data['order_by']) ? " ORDER BY " .  $data['order_by'] : "";
@@ -339,7 +340,7 @@ class Reports_model extends CI_Model {
         left join company as dd on dd.company_id = bb.company
         WHERE bb.company = '{$company_id}'
         AND aa.pperiod = '{$pperiod}'
-        AND aa.dept_id = '{$dept_id}'
+        {$dept_id}
         {$dates}
         GROUP BY {$group_by} {$order_by}";
         $result['result'] = $this->db->query($str)->result_array();

@@ -16,6 +16,7 @@ class Reports extends CI_Controller {
 
 	public function loadBilling(){
 		$data['page_title'] = 'pages/reports/billing';
+		$data['sysinfo'] = $this->mylib->getsysinfo();
 		$this->load->view('main', $data);
 	}
 
@@ -48,6 +49,7 @@ class Reports extends CI_Controller {
 	}
 	public function view(){
 		$data['page_title'] = 'pages/reports/billing';
+		$data['sysinfo'] = $this->mylib->getsysinfo();
 		$this->load->view('main', $data);
 	}
 	public function payslip(){
@@ -129,12 +131,20 @@ class Reports extends CI_Controller {
 
 	public function getNewBiling(){
 		$deptId = $this->input->post('mdata')['mdepartment_id'];
-		if($deptId == 0){
+		if($deptId <= 0){
 			$data['myear'] = $this->input->post('mdata')['myear'];
 			$data['mcompany'] = $this->input->post('mdata')['mcompany_id'];
 			$data['mperiod'] = $this->input->post('mdata')['mperiod'];
 
-			echo json_encode($this->reports_model->getpertripbreakdown_rpt($data));
+			if($deptId == 0){
+				echo json_encode($this->reports_model->getpertripbreakdown_rpt($data));
+			}else{
+				$result = $this->reports_model->getpertripbreakdown_rpt($data);
+				foreach ($this->reports_model->getmanualbilling($this->input->post('mdata'))['result'] as $key => $val) {
+					array_push($result['result'], $val);
+				}
+				echo json_encode($result);
+			}
 		}else{
 			echo json_encode($this->reports_model->getmanualbilling($this->input->post('mdata')));
 		}

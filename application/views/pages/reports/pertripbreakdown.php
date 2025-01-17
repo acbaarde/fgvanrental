@@ -23,30 +23,24 @@
     <div class="col-md-12">
         <div class="card" id="card_id">
             <div class="card-body">
-                <div class="form-group row">
-                    <img src="../../assets/images/logofg.png" alt="fg" style="display: block; margin-left: auto; margin-right: auto; width:500px;height:100px">
-                </div>
-                <div class="form-group row"  style="margin-bottom: 5px;">
-                    <div class="col-md-12">
-                        <h5 style="margin-bottom: 0"><strong>FG VAN RENTAL</strong></h5>
-                    </div>
-                </div>
+                <?php $this->load->view('pages/reports/rptheader'); ?>
+
                 <div class="form-group row" style="margin-bottom: 5px;">
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <div class="form-group row" style="margin-bottom: 0;">
                             <div class="col-md-12">
                                 <ul class="list-unstyled" style="margin-bottom: 0;">
                                     <li>
                                         <ul class="list-inline">
-                                            <li style="width: 125px;">STATEMENT DATE:</li>
+                                            <li style="width: 130px;">STATEMENT DATE:</li>
                                             <li style="display: inline"><strong id="rpt_stdate"></strong></li>
                                         </ul>
                                         <ul class="list-inline">
-                                            <li style="width: 125px;">PERIOD:</li>
+                                            <li style="width: 130px;">PERIOD:</li>
                                             <li style="display: inline"><strong id="rpt_period"></strong></li>
                                         </ul>
                                         <ul class="list-inline">
-                                            <li style="width: 125px;">REF NO.:</li>
+                                            <li style="width: 130px;">REF NO.:</li>
                                             <!-- <li style="display: inline"><strong id="rpt_refno"></strong></li> -->
                                             <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
                                         </ul>
@@ -55,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <div class="form-group row" style="margin-bottom: 0;">
                             <div class="col-md-12">
                                 <ul class="list-unstyled" style="margin-bottom: 0;">
@@ -77,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <div class="form-group row" style="margin-bottom: 0;">
                             <div class="col-md-12">
                                 <ul class="list-unstyled" style="margin-bottom: 0;">

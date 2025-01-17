@@ -24,19 +24,26 @@
     <div class="col-md-12">
         <div class="card" id="card_id">
             <div class="card-body">
-                <div class="form-group row">
-                    <img src="../assets/images/logofg.png" alt="fg" style="display: block; margin-left: auto; margin-right: auto; width:500px;height:100px">
+                <div class="form-group row" style="margin-bottom: 2rem;">
+                    <div class="col-md-12">
+                        <img src="../assets/images/logogv.jpg" alt="logogv.jpg" style="position: absolute; float: inline-start; width:140px; height:140px; margin-left: 50px;">
+                        <ul class="list-unstyled" style="text-align: center; font-size: medium; margin-top: 1rem;">
+                            <li><h5><strong><?php echo $sysinfo['name']; ?></strong></h5></li>
+                            <li><h6><strong><?php echo $sysinfo['address']; ?></strong></h6></li>
+                            <li><h6><strong>Contact No. <?php echo $sysinfo['contact']; ?></strong></h6></li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-12" style="text-align: center;">
-                        <h5><strong>FG VAN RENTAL BILLING STATEMENT</strong></h5>
+                        <h5><strong>BILLING STATEMENT</strong></h5>
                         <h6><strong id="rpt_title"></strong></h6>
                     </div>
                 </div>
                 
                 <div class="form-group row">
-                    <div class="col-md-8">
+                    <div class="col-sm-8">
                         <ul class="list-unstyled">
                             <li>
                                 <ul class="list-inline">
@@ -50,7 +57,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <ul class="list-unstyled" style="float: right;">
                             <li>
                                 <ul class="list-inline">

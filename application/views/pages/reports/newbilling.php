@@ -26,18 +26,7 @@
     <div class="col-md-12">
         <div class="card" id="card_id">
             <div class="card-body">
-                <div class="form-group row">
-                    <img src="../../assets/images/logofg.png" alt="fg" style="display: block; margin-left: auto; margin-right: auto; width:500px;height:100px">
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <ul class="list-unstyled" style="text-align: center; font-size: x-small">
-                            <li><strong>Blk 6 Lot 34 A Area F Brgy. San Pedro Sapang Palay City of SJDM, Bulacan</strong></li>
-                            <li><strong>Contact No. 0926-0581-888 / 0927-3079-766</strong></li>
-                        </ul>
-                    </div>
-                </div>
+                <?php $this->load->view('pages/reports/rptheader'); ?>
 
                 <div class="form-group row">
                     <div class="col-md-12" style="text-align: center;">
@@ -101,8 +90,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="border: none !important;">Reycie R. Patulot</td>
-                                    <td style="border: none !important;">Bianca Liban</td>
+                                    <td style="border: none !important;" id="preparedby"></td>
+                                    <td style="border: none !important;">
+                                        <img src="../../assets/images/biancasigna.png" alt="biancasigna.png" style="position: absolute; width:100px; height:100px;">
+                                        <span id="checkedby"></span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td style="border: none !important;">__________________________________</td>
@@ -124,7 +116,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="border: none !important;">Gilbert Liban</td>
+                                    <td style="border: none !important;" id="approvedby"></td>
                                     <td style="border: none !important;"></td>
                                 </tr>
                                 <tr>
@@ -205,6 +197,44 @@
                         $("#mdepartment").html(arrDept);
                     }
                 });
+
+                //LOAD SIGNATORIES
+                $.ajax({
+                    url: '<?php echo base_url('datamaint/getSigna'); ?>',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(result){
+                        $.each(result, function(i, v){
+                            if(this.type == 'A'){
+                                $('#approvedby')
+                                    .append($('<img>').attr({
+                                        src: "../../assets/images/" + this.signature,
+                                        alt: this.signature,
+                                        style: "position: absolute; width:100px; height:100px;"
+                                    }))
+                                    .append($('<span>').text(this.name))
+                            }
+                            if(this.type == 'C'){
+                                $('#checkedby')
+                                    .append($('<img>').attr({
+                                        src: "../../assets/images/" + this.signature,
+                                        alt: this.signature,
+                                        style: "position: absolute; width:100px; height:100px;"
+                                    }))
+                                    .append($('<span>').text(this.name))
+                            }
+                            if(this.type == 'P'){
+                                $('#preparedby')
+                                    .append($('<img>').attr({
+                                        src: "../../assets/images/" + this.signature,
+                                        alt: this.signature,
+                                        style: "position: absolute; width:100px; height:100px;"
+                                    }))
+                                    .append($('<span>').text(this.name))
+                            }
+                        })
+                    }
+                })
 
                 self.loadEvents();
                 g_messageDialogViewModel.hideWaitDialog();
@@ -300,7 +330,7 @@
                         newbillingform.find('#tblData tbody').empty();
                         newbillingform.find('.total_amount').empty();
                         $.each(obj['result'], function(i, v){
-                            if(mdepartment == 0){
+                            if(typeof this.id == 'undefined'){
                                 var cfrom = obj.rpt_info['cfrom'];
                                 var cto = obj.rpt_info['cto'];
                                 
