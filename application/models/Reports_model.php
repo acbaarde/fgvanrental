@@ -282,9 +282,9 @@ class Reports_model extends CI_Model {
         comp.refno,
         vehi.plate_number
         FROM
-        (SELECT * FROM regular_sched2021 UNION ALL
-        SELECT * FROM extended_sched2021 UNION ALL
-        SELECT * FROM special_sched2021) AS reg
+        (SELECT * FROM regular_sched{$myear} UNION ALL
+        SELECT * FROM extended_sched{$myear} UNION ALL
+        SELECT * FROM special_sched{$myear}) AS reg
         LEFT JOIN aries.company AS comp ON comp.company_id = reg.company_id
         LEFT JOIN aries.drivers AS driver ON driver.driver_id = reg.driver_id
         LEFT JOIN aries.vehicles AS vehi ON vehi.id = reg.vehicle_id
