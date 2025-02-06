@@ -9,6 +9,7 @@
                     <select id="myear"><option selected value hidden>Please select Year...</option></select>
                     <select id="mcompany" style="margin-left: 5px;"><option selected value hidden>Please select Company...</option></select>
                     <select id="mperiod" style="margin-left: 5px;"><option selected value hidden>Please select Period...</option></select>
+                    <input type="text" id="refno" placeholder="Reference no." style="margin-left: 5px; padding: 0 0;">
                     <select id="mroutetype" style="margin-left: 5px;">
                         <option selected value>Please select Route type...</option>
                         <option value="regular">Regular</option>
@@ -47,8 +48,7 @@
                                         </ul>
                                         <ul class="list-inline">
                                             <li style="width: 125px;">REF NO.:</li>
-                                            <!-- <li style="display: inline"><strong id="rpt_refno"></strong></li> -->
-                                            <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
+                                            <li style="display: inline"><strong id="refno_value"></strong></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -222,7 +222,8 @@
                         perroutebreakdownform.find('#form_title').text(formatUpperCase($('#mroutetype').val()));
                         perroutebreakdownform.find('#rpt_stdate').text(formatDateString(obj['rpt_info']['pperiod']));
                         perroutebreakdownform.find('#rpt_period').text(formatFromToDate(obj['rpt_info']['pperiod'],obj['rpt_info']['cto']));
-                        perroutebreakdownform.find('#rpt_refno').text(obj['rpt_info']['refno']);
+                        // perroutebreakdownform.find('#rpt_refno').text(obj['rpt_info']['refno']);
+                        perroutebreakdownform.find('#refno_value').text($('#refno').val());
 
                         // $('#toprint').empty().append($('<button>').addClass('btn btn-primary btn-sm').attr('type','submit').text('PRINT'));
 

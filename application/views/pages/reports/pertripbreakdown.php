@@ -8,6 +8,7 @@
                 <div class="form-group">
                     <select id="myear"><option selected value hidden>Please select Year...</option></select>
                     <select id="mcompany" style="margin-left: 5px;"><option selected value hidden>Please select Company...</option></select>
+                    <input type="text" id="refno" placeholder="Reference no." style="margin-left: 5px; padding: 0 0;"> 
                     <select id="mperiod" style="margin-left: 5px;"><option selected value hidden>Please select Period...</option></select>
                 </div>
             </div>
@@ -42,7 +43,7 @@
                                         <ul class="list-inline">
                                             <li style="width: 130px;">REF NO.:</li>
                                             <!-- <li style="display: inline"><strong id="rpt_refno"></strong></li> -->
-                                            <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
+                                            <li style="display: inline"><strong id="refno_value"></strong></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -265,7 +266,8 @@
 
                         pertripbreakdownform.find('#rpt_stdate').text(formatDateString(obj['rpt_info']['pperiod']));
                         pertripbreakdownform.find('#rpt_period').text(formatFromToDate(obj['rpt_info']['pperiod'],obj['rpt_info']['cto']));
-                        pertripbreakdownform.find('#rpt_refno').text(obj['rpt_info']['refno']);
+                        // pertripbreakdownform.find('#rpt_refno').text(obj['rpt_info']['refno']);
+                        pertripbreakdownform.find('#refno_value').text($('#refno').val());
 
                         // $('#toprint').empty().append($('<button>').addClass('btn btn-primary btn-sm').attr('type','submit').text('PRINT'));
 

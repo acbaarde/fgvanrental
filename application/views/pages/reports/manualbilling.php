@@ -53,7 +53,7 @@
                             <li>
                                 <ul class="list-inline">
                                     <li style="width: 130px;">REFERENCE NO.:</li>
-                                    <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
+                                    <li style="display: inline"><input value id="ref" type="text" size="10" maxlength="10"></li>
                                 </ul>
                             </li>
                         </ul>

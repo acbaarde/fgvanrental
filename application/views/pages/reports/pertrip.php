@@ -8,6 +8,7 @@
                 <div class="form-group">
                     <select id="myear"><option selected value hidden>Please select Year...</option></select>
                     <select id="mcompany" style="margin-left: 5px;"><option selected value hidden>Please select Company...</option></select>
+                    <input type="text" id="refno" placeholder="Reference no." style="margin-left: 5px; padding: 0 0;">
                     <select id="mperiod" style="margin-left: 5px;"><option selected value hidden>Please select Period...</option></select>
                 </div>
             </div>
@@ -69,7 +70,7 @@
                                 <ul class="list-inline">
                                     <li style="width: 130px;">REFERENCE NO.:</li>
                                     <!-- <li style="display: inline"><strong id="rpt_refno"></strong></li> -->
-                                    <li style="display: inline"><input value id="ref" type="text" size="3" maxlength="6" placeholder="000000"></li>
+                                    <li style="display: inline"><strong id="refno_value"></strong></li>
                                 </ul>
                             </li>
                         </ul>
@@ -194,7 +195,8 @@
                         pertripform.find('#rpt_title').text('for ' + obj['company']['company_name']);
                         pertripform.find('#rpt_stdate').text(formatDateString(obj['period']['pperiod']));
                         pertripform.find('#rpt_period').text(formatFromToDate(obj['period']['cfrom'],obj['period']['cto']));
-                        pertripform.find('#rpt_refno').text(obj['company']['refno']);
+                        // pertripform.find('#rpt_refno').text(obj['company']['refno']);
+                        pertripform.find('#refno_value').text($('#refno').val());
 
                         var total_amount = 0;
                         pertripform.find('#pertriplist').empty();
@@ -319,6 +321,9 @@
                     if($('#mcompany').val() == ''){
                         alert('Please Select Company ...');
                         $("#mperiod").val('');
+                        return false;
+                    }
+                    if($('#mperiod').val() == ''){
                         return false;
                     }
 
