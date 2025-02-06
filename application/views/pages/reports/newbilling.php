@@ -330,7 +330,7 @@
                         newbillingform.find('#tblData tbody').empty();
                         newbillingform.find('.total_amount').empty();
                         $.each(obj['result'], function(i, v){
-                            if(typeof this.id == 'undefined'){
+                            if(typeof this.id == 'undefined' && mdepartment == '0'){
                                 var cfrom = obj.rpt_info['cfrom'];
                                 var cto = obj.rpt_info['cto'];
                                 
@@ -344,15 +344,19 @@
                                         .append($('<td>').css({ "padding": "1rem" }).html('SOA no. <strong>' + refno + '</strong> | ' + datetext + ' (REGULAR, COMBINED, and SPECIAL TRIPS) with total trips of ' + this.total_trip))
                                         .append($('<td>').css({ "text-align": "center", "padding": "1rem 0 1rem 0" }).text(toparseFloat(this.amount)))
                                     )
-                            }else{
+
+                                total_amount += parseFloat(this.amount);
+                            }
+
+                            if(typeof this.id !== 'undefined'){
                                 newbillingform.find('#tblData tbody')
                                     .append($('<tr>')
                                         .append($('<td>').css({ "padding": "1rem" }).html('SOA no. <strong>' + refno + '</strong> | ' + this.dmonth + ' ' + this.ddays + ', ' + this.dyear + ' SPECIAL TRIP Requested by ' + this.dept_name))
                                         .append($('<td>').css({ "text-align": "center", "padding": "1rem 0 1rem 0" }).text(toparseFloat(this.amount)))
                                     )
+                                total_amount += parseFloat(this.amount);
                             }
-                            
-                            total_amount += parseFloat(this.amount);
+
                         });
                         newbillingform.find('#total_amount').text(toparseFloat(total_amount));
                     }
