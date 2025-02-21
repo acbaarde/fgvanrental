@@ -70,6 +70,9 @@
                             <tbody>
                             </tbody>
                             <tfoot>
+                                <tr>
+                                    <td style="text-align: right;"><strong>TOTAL TRIPS: <span id="trips"></span></strong></td>
+                                </tr>
                                 <tr style="text-align: center;">
                                     <td style="text-align: right;"><strong>Total Amount (Incl. 12% Vat): </strong></td>
                                     <td><strong id="total_amount"></strong></td>
@@ -172,7 +175,6 @@
                     dataType: 'json',
                     success: function(result){
                         const obj = result;
-                        // console.log(obj);
                         var p_list = ['<option selected value>Please select Company...</option>'];
                         $.each(obj, function(i, val){
                             p_list.push($("<option></option>").html(this.abbr).val(this.company_id));
@@ -313,7 +315,6 @@
                     async: false,
                     success: function(result){
                         const obj = result;
-                        
                         if(obj.result.length > 0){
                             newbillingform.prop('hidden', false);
                             $('#alert_id').html('');
@@ -327,10 +328,13 @@
                             $('#alert_id').html($('<div>').addClass('alert alert-info').attr('role','alert').text('NO RECORDS FOUND!!!'));
                         }
                         var total_amount = 0;
+                        var trips = 0;
                         newbillingform.find('#tblData tbody').empty();
-                        newbillingform.find('.total_amount').empty();
+                        newbillingform.find('#total_amount').empty();
+                        newbillingform.find('#trips').empty();
                         $.each(obj['result'], function(i, v){
                             if(typeof this.id == 'undefined' && mdepartment == '0'){
+                                
                                 var cfrom = obj.rpt_info['cfrom'];
                                 var cto = obj.rpt_info['cto'];
                                 
@@ -341,24 +345,28 @@
 
                                 newbillingform.find('#tblData tbody')
                                     .append($('<tr>')
-                                        .append($('<td>').css({ "padding": "1rem" }).html('SOA no. <strong>' + refno + '</strong> | ' + datetext + ' (REGULAR, COMBINED, and SPECIAL TRIPS) with total trips of ' + this.total_trip))
+                                        .append($('<td>').css({ "padding": "1rem" }).html('SOA no. <strong>' + refno + '</strong> | ' + datetext + ' (REGULAR, COMBINED, and SPECIAL TRIPS) '))
                                         .append($('<td>').css({ "text-align": "center", "padding": "1rem 0 1rem 0" }).text(toparseFloat(this.amount)))
                                     )
 
                                 total_amount += parseFloat(this.amount);
+                                trips += parseInt(this.total_trip);
                             }
 
                             if(typeof this.id !== 'undefined'){
                                 newbillingform.find('#tblData tbody')
                                     .append($('<tr>')
-                                        .append($('<td>').css({ "padding": "1rem" }).html('SOA no. <strong>' + refno + '</strong> | ' + this.dmonth + ' ' + this.ddays + ', ' + this.dyear + ' SPECIAL TRIP Requested by ' + this.dept_name))
+                                        .append($('<td>').css({ "padding": "1rem" }).html('SOA no. <strong>' + refno + '</strong> | ' + this.dmonth + ' ' + this.ddays + ', ' + this.dyear + ' SPECIAL TRIP Requested by ' + this.dept_name + ' ('+ this.trips +') '))
                                         .append($('<td>').css({ "text-align": "center", "padding": "1rem 0 1rem 0" }).text(toparseFloat(this.amount)))
                                     )
                                 total_amount += parseFloat(this.amount);
+                                trips += parseInt(this.trips);
                             }
 
                         });
                         newbillingform.find('#total_amount').text(toparseFloat(total_amount));
+                        newbillingform.find('#trips').text(trips);
+
                     }
                 });
 

@@ -102,7 +102,8 @@ class Reports_model extends CI_Model {
         FROM (SELECT * FROM regular_sched{$myear} UNION ALL SELECT * FROM special_sched{$myear} UNION ALL SELECT * FROM extended_sched{$myear}) AS aa
         left join company as bb on bb.company_id = aa.company_id
         WHERE bb.company_id = '{$mcompany}'
-        AND aa.pperiod = '{$mperiod}'";
+        AND aa.pperiod = '{$mperiod}'
+        HAVING SUM(aa.total_amount) > 0";
         $result['result'] = $this->db->query($str)->result_array();
 
         return $result;
@@ -310,7 +311,7 @@ class Reports_model extends CI_Model {
     }
 
     public function getmanualbilling($data=array()){
-        $year = $this->mylib->get_active_yr();
+        $year = $data['myear'];
         $company_id = $data['mcompany_id'];
         $pperiod = $data['mperiod'];
         $dept_id = $data['mdepartment_id']  == -1 ? "" : " AND aa.dept_id = '{$data['mdepartment_id']}'";
@@ -327,7 +328,8 @@ class Reports_model extends CI_Model {
         aa.pperiod, 
         aa.dept_id,
         cc.dept_name,
-        IF(COUNT(route)>1,CONCAT(route,'(',COUNT(route),')'),route) AS route,
+        /*IF(COUNT(route)>1,CONCAT(route,'(',COUNT(route),')'),route) AS route,*/
+        COUNT(aa.dept_id) AS trips,
         DATE_FORMAT(aa.datetime, '%M %d, %Y') AS dated,
         aa.datetime as `datetime`,
         SUM(aa.rates) AS amount,
