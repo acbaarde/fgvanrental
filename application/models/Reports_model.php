@@ -328,7 +328,7 @@ class Reports_model extends CI_Model {
         aa.pperiod, 
         aa.dept_id,
         cc.dept_name,
-        /*IF(COUNT(route)>1,CONCAT(route,'(',COUNT(route),')'),route) AS route,*/
+        IF(COUNT(route)>1,CONCAT(route,'(',COUNT(route),')'),route) AS route,
         COUNT(aa.dept_id) AS trips,
         DATE_FORMAT(aa.datetime, '%M %d, %Y') AS dated,
         aa.datetime as `datetime`,
